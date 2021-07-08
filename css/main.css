@@ -1,4 +1,9 @@
 @charset "UTF-8";
+/*
+* ==========================================
+* RESET STYLES
+* ==========================================
+*/
 /* Указываем box sizing */
 *,
 *::before,
@@ -76,6 +81,172 @@ select {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+/*
+* ==========================================
+* GLOBAL STYLES
+* ==========================================
+*/
+.underlined {
+  text-decoration: none;
+  border-bottom: 1px solid white;
+  transition: all 0.1s ease-in-out;
+}
+
+.underlined:hover {
+  border-bottom: 1px solid transparent;
+}
+
+/*
+* ==========================================
+* FIRST PART STYLES
+* ==========================================
+*/
+.first-part {
+  position: relative;
+}
+
+/*
+* ==========================================
+* MAIN-MENU STYLES
+* ==========================================
+*/
+.menu {
+  z-index: 1000;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+.menu__area {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.menu__area-left {
+  justify-content: flex-start;
+  padding-left: 10rem;
+}
+.menu__area-left .menu__item {
+  transform: rotate(-90deg);
+}
+.menu__area-right {
+  justify-content: flex-end;
+  padding-right: 10rem;
+}
+.menu__area-right .menu__item {
+  transform: rotate(90deg);
+}
+.menu__items {
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+.menu__item a {
+  color: white;
+  font-size: 20px;
+}
+
+.menu_fixed {
+  position: fixed;
+  top: 0;
+  bottom: auto;
+  left: 0;
+}
+.menu_sticky-bottom {
+  position: absolute;
+  top: auto;
+  bottom: 0;
+}
+
+/*
+* ==========================================
+* MAIN-SECTION STYLES
+* ==========================================
+*/
+.main-section {
+  position: relative;
+}
+.main-section__full-screen {
+  background-color: #ff401e;
+}
+
+/* full-screen wrapper for video */
+.full-screen {
+  position: relative;
+  min-height: 100vh;
+}
+.full-screen__wrapper {
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+}
+.full-screen__video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* wrapper for brand-logo */
+.brand-logo {
+  position: fixed;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.brand-logo__item {
+  width: 600px;
+}
+
+/* text under the brand logo */
+.main-section__text {
+  height: 50px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: 16rem;
+}
+.main-section__brand-name {
+  color: white;
+  font-weight: 600;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.en-version-link {
+  color: white;
+  font-size: 20px;
+}
+
+/*
+* ==========================================
+* TEAM-SECTION STYLES
+* ==========================================
+*/
+.about-section {
+  position: relative;
+  height: 200vh;
+  background-color: #ff5a3d;
+}
+
+.test {
+  position: relative;
+  min-height: 100vh;
+  background-color: rebeccapurple;
 }
 
 /*# sourceMappingURL=main.css.map */
