@@ -2,9 +2,19 @@
 
 /*
 * ==========================================
-* GLOBAL STYLES
+* GLOBAL STYLES, MIXINS AND VARIABLES
 * ==========================================
 */
+
+@mixin flex($flex-direction: initial, $justify-content: initial, $align-items: initial) {
+  display: flex;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
+
+$peach: rgb(255, 90, 61);
+$pink: rgb(255, 30, 172);
 
 .underlined {
   text-decoration: none;
@@ -37,8 +47,7 @@
 
   width: 100%;
   height: 100vh;
-  display: flex;
-  flex-direction: row;
+  @include flex(row);
 
   &__area {
     display: flex;
@@ -66,9 +75,7 @@
 
   &__items {
     height: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: column;
+    @include flex(column, space-evenly);
   }
 
   &__item a {
@@ -111,7 +118,7 @@
 
 .full-screen {
   position: relative;
-  min-height: 100vh;
+  min-height: 150vh;
 
   &__wrapper {
     width: 100%;
@@ -131,37 +138,33 @@
 
 /* wrapper for brand-logo */
 
-.brand-logo {
-  position: fixed;
-  top: -100px;
-  left: 0;
-  width: 100%;
-  height: 100%;
+.main-section {
+  &__brand-wrapper {
+    position: fixed;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 100%;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    @include flex(initial, center, center);
+  }
 
-  &__item {
-    width: 600px;
+  &__brand {
+    width: 400px;
   }
 }
-
 /* text under the brand logo */
 
 .main-section {
   &__text {
     height: 50px;
     width: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    @include flex(column, center, center);
     position: fixed;
     margin: auto;
     left: 0;
     right: 0;
-    bottom: 16rem;
+    bottom: 8rem;
   }
 
   &__brand-name {
@@ -180,15 +183,88 @@
 
 /*
 * ==========================================
-* TEAM-SECTION STYLES
+* ABOUT-SECTION STYLES
 * ==========================================
 */
 
 .about-section {
+  padding-top: 10rem;
+  padding-bottom: 1px; // to avoid margin collapsing
   position: relative;
-  height: 200vh;
-  background-color: rgb(255, 90, 61);
+  background-color: $peach;
 }
+
+/* team header */
+
+.team-header {
+  top: 5rem;
+  @include flex(row, center, center);
+
+  &__item {
+    margin-left: 4rem;
+    margin-right: 4rem;
+  }
+
+  &__brand-wrapper {
+    width: 200px;
+  }
+
+  &__name, &__post {
+    color: white;
+    @include flex(column, center, center);
+  }
+
+}
+
+/* vertical stripes */
+
+.stripe {
+  opacity: 0;
+  position: fixed;
+  top: 15rem;
+  height: 80vh;
+  width: 1px;
+  background-color: white;
+}
+
+/* taglines */
+
+.taglines {
+  @include flex(column, center, center);
+  margin-top: 20rem;
+  color: white;
+
+  &__item {
+    @include flex(column, center, center);
+    margin-bottom: 15rem;
+  }
+
+  &__text {
+    @include flex(column, center, center);
+
+    &_bold {
+      font-size: 1.5rem;
+      line-height: 2.2rem;
+      margin-bottom: 2rem;
+    }
+
+    &_light {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.team-image {
+  width: 100%;
+  margin-bottom: 20rem;
+  @include flex(initial, center, center);
+
+  & img {
+    width: 50%;
+  }
+}
+
+/* test section. should be deleted later */
 
 .test {
   position: relative;

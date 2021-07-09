@@ -84,7 +84,7 @@ select {
 }
 /*
 * ==========================================
-* GLOBAL STYLES
+* GLOBAL STYLES, MIXINS AND VARIABLES
 * ==========================================
 */
 .underlined {
@@ -117,6 +117,8 @@ select {
   height: 100vh;
   display: flex;
   flex-direction: row;
+  justify-content: initial;
+  align-items: initial;
 }
 .menu__area {
   display: flex;
@@ -140,8 +142,9 @@ select {
 .menu__items {
   height: 100%;
   display: flex;
-  justify-content: space-evenly;
   flex-direction: column;
+  justify-content: space-evenly;
+  align-items: initial;
 }
 .menu__item a {
   color: white;
@@ -175,7 +178,7 @@ select {
 /* full-screen wrapper for video */
 .full-screen {
   position: relative;
-  min-height: 100vh;
+  min-height: 150vh;
 }
 .full-screen__wrapper {
   width: 100%;
@@ -192,18 +195,19 @@ select {
 }
 
 /* wrapper for brand-logo */
-.brand-logo {
+.main-section__brand-wrapper {
   position: fixed;
   top: -100px;
   left: 0;
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: initial;
   justify-content: center;
   align-items: center;
 }
-.brand-logo__item {
-  width: 600px;
+.main-section__brand {
+  width: 400px;
 }
 
 /* text under the brand logo */
@@ -211,14 +215,14 @@ select {
   height: 50px;
   width: 200px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   position: fixed;
   margin: auto;
   left: 0;
   right: 0;
-  bottom: 16rem;
+  bottom: 8rem;
 }
 .main-section__brand-name {
   color: white;
@@ -234,15 +238,93 @@ select {
 
 /*
 * ==========================================
-* TEAM-SECTION STYLES
+* ABOUT-SECTION STYLES
 * ==========================================
 */
 .about-section {
+  padding-top: 10rem;
+  padding-bottom: 1px;
   position: relative;
-  height: 200vh;
   background-color: #ff5a3d;
 }
 
+/* team header */
+.team-header {
+  top: 5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.team-header__item {
+  margin-left: 4rem;
+  margin-right: 4rem;
+}
+.team-header__brand-wrapper {
+  width: 200px;
+}
+.team-header__name, .team-header__post {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* vertical stripes */
+.stripe {
+  opacity: 0;
+  position: fixed;
+  top: 15rem;
+  height: 80vh;
+  width: 1px;
+  background-color: white;
+}
+
+/* taglines */
+.taglines {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20rem;
+  color: white;
+}
+.taglines__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15rem;
+}
+.taglines__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.taglines__text_bold {
+  font-size: 1.5rem;
+  line-height: 2.2rem;
+  margin-bottom: 2rem;
+}
+.taglines__text_light {
+  font-size: 1.2rem;
+}
+
+.team-image {
+  width: 100%;
+  margin-bottom: 20rem;
+  display: flex;
+  flex-direction: initial;
+  justify-content: center;
+  align-items: center;
+}
+.team-image img {
+  width: 50%;
+}
+
+/* test section. should be deleted later */
 .test {
   position: relative;
   min-height: 100vh;
