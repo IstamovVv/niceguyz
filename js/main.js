@@ -40,8 +40,9 @@ $(document).ready(function () {
   let teamHeader = $(".team-header");
   let firstFounder = $("#first-founder");
   let secondFounder = $("#second-founder");
-  let leftStripe = $("#left-stripe");
-  let rightStripe = $("#right-stripe");
+  let stripes = $(".stripe");
+  let leftStripe = $(".stripe_left");
+  let rightStripe = $(".stripe_right");
   let teamImage = $(".team-image");
 
   /* test section. should be deleted later */
@@ -67,11 +68,9 @@ $(document).ready(function () {
 
   doc.scroll(function () {
     if (test[0].getBoundingClientRect().top >= test.height()) {
-      menu.removeClass("menu_sticky-bottom");
-      menu.addClass("menu_fixed");
+      menu.removeClass("menu_sticky-bottom").addClass("menu_fixed");
     } else {
-      menu.removeClass("menu_fixed");
-      menu.addClass("menu_sticky-bottom");
+      menu.removeClass("menu_fixed").addClass("menu_sticky-bottom");
     }
   });
 
@@ -90,8 +89,8 @@ $(document).ready(function () {
     let GCEnd = 30;
     let BCEnd = 172;
 
-    let GCCurrent = normalize(0, -500, 90, 30, coords.top);
-    let BCCurrent = normalize(0, -500, 61, 172, coords.top);
+    let GCCurrent = normalize(0, -500, GCStart, GCEnd, coords.top);
+    let BCCurrent = normalize(0, -500, BCStart, BCEnd, coords.top);
 
     about.css("background-color", `rgb(255, ${GCCurrent}, ${BCCurrent})`);
   });
@@ -101,6 +100,7 @@ $(document).ready(function () {
    * to be centered on team-header__item elements
    * ==========================================
    */
+
   let firstCoords = firstFounder[0].getBoundingClientRect();
   leftStripe.css("left", `${firstCoords.left + firstFounder.width() / 2}px`);
 
@@ -117,8 +117,7 @@ $(document).ready(function () {
     let coords = about[0].getBoundingClientRect();
     let newOpacity = normalize(0, -150, 0, 100, coords.top);
 
-    leftStripe.css("opacity", `${newOpacity}%`);
-    rightStripe.css("opacity", `${newOpacity}%`);
+    stripes.css("opacity", `${newOpacity}%`);
   });
 
   /* ==========================================
@@ -126,6 +125,7 @@ $(document).ready(function () {
    * disappear when scrolling
    * ==========================================
    */
+
   doc.scroll(function () {
     let items = $(".taglines__item");
     Array.from(items).forEach((item) => {
@@ -133,6 +133,15 @@ $(document).ready(function () {
       let newOpacity = normalize(300, 170, 100, 0, coords.top);
       $(item).css("opacity", `${newOpacity}%`);
     });
+  });
+
+  doc.scroll(function () {
+    let coords = about[0].getBoundingClientRect();
+    if (Math.abs(coords.top) + $(window).height() >= coords.height) {
+      stripes.addClass("stripe_absolute").removeClass("stripe_fixed");
+    } else {
+      stripes.addClass("stripe_fixed").removeClass("stripe_absolute");
+    }
   });
 });
 
