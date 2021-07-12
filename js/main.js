@@ -30,23 +30,26 @@ function normalize(firstLeft, firstRight, secondLeft, secondRight, firstValue) {
 $(document).ready(function () {
   let doc = $(document);
 
+  /* first part variable */
+  let firstPart = $(".first-part");
+
   /* main-section variables */
-  let main = $(".main-section");
   let brand = $("#main-brand");
   let menu = $(".menu");
 
   /* about-section variables */
-  let about = $(".about-section");
-  let teamHeader = $(".team-header");
+  let aboutSection = $(".about-section");
   let firstFounder = $("#first-founder");
   let secondFounder = $("#second-founder");
   let stripes = $(".stripe");
   let leftStripe = $(".stripe_left");
   let rightStripe = $(".stripe_right");
-  let teamImage = $(".team-image");
 
-  /* test section. should be deleted later */
-  let test = $(".test");
+  /* slider section variables */
+  let slider = $(".slider");
+  let sliderCoords = slider[0].getBoundingClientRect();
+  let sliderWrapper = $(".slider-wrapper");
+  let sliderLength = Array.from($(".slider .slide")).length;
 
   /*---------- MAIN SECTION BEGIN ----------*/
 
@@ -67,7 +70,12 @@ $(document).ready(function () {
    */
 
   doc.scroll(function () {
-    if (test[0].getBoundingClientRect().top >= test.height()) {
+    let firstPartCoords = firstPart[0].getBoundingClientRect();
+
+    if (
+      Math.abs(firstPartCoords.top) <
+      firstPart.height() - $(window).height()
+    ) {
       menu.removeClass("menu_sticky-bottom").addClass("menu_fixed");
     } else {
       menu.removeClass("menu_fixed").addClass("menu_sticky-bottom");
@@ -79,7 +87,7 @@ $(document).ready(function () {
   /*---------- ABOUT SECTION BEGIN ----------*/
 
   doc.scroll(function () {
-    let coords = about[0].getBoundingClientRect();
+    let coords = aboutSection[0].getBoundingClientRect();
 
     // GC - Green Channel
     // BC - Blue Channel
@@ -92,7 +100,10 @@ $(document).ready(function () {
     let GCCurrent = normalize(0, -500, GCStart, GCEnd, coords.top);
     let BCCurrent = normalize(0, -500, BCStart, BCEnd, coords.top);
 
-    about.css("background-color", `rgb(255, ${GCCurrent}, ${BCCurrent})`);
+    aboutSection.css(
+      "background-color",
+      `rgb(255, ${GCCurrent}, ${BCCurrent})`
+    );
   });
 
   /* ==========================================
@@ -114,7 +125,7 @@ $(document).ready(function () {
    */
 
   doc.scroll(function () {
-    let coords = about[0].getBoundingClientRect();
+    let coords = aboutSection[0].getBoundingClientRect();
     let newOpacity = normalize(0, -150, 0, 100, coords.top);
 
     stripes.css("opacity", `${newOpacity}%`);
@@ -136,11 +147,91 @@ $(document).ready(function () {
   });
 
   doc.scroll(function () {
-    let coords = about[0].getBoundingClientRect();
+    let coords = aboutSection[0].getBoundingClientRect();
     if (Math.abs(coords.top) + $(window).height() >= coords.height) {
       stripes.addClass("stripe_absolute").removeClass("stripe_fixed");
     } else {
       stripes.addClass("stripe_fixed").removeClass("stripe_absolute");
+    }
+  });
+
+  /* ==========================================
+   * Slider section code
+   * ==========================================
+   */
+
+  // z-index for slides
+  for (let i = 0; i < sliderLength; ++i) {
+    $(`.slide[data-index=${i}]`).css("z-index", `${sliderLength - i - 1}`);
+  }
+
+  // All slides except the first should be transparent
+  $(".slide:not(.current)").css("opacity", "0");
+
+  // calculate height for slider-wrapper
+  sliderWrapper.css("height", `${100 * sliderLength}vh`);
+
+  // active class trigger for slider
+  $(window).scroll(function () {
+    let aboutCoords = aboutSection[0].getBoundingClientRect();
+
+    if (-aboutCoords.top >= aboutCoords.height) {
+      slider.addClass("active");
+    } else {
+      $(".slide").css("top", "0");
+      slider.removeClass("active");
+    }
+  });
+
+  $(window).scroll(function () {
+    if (slider.hasClass("active")) {
+      // scroll inside the slider
+      let sliderScroll = $(window).scrollTop() - sliderCoords.top;
+      let current = $(".slide.current");
+
+      // the boundary when we have to show a new next slide
+      let maxHeight = $(window).height() * (current.data("index") + 1);
+      // the boundary when we have to show a previous slide
+      let minHeight = $(window).height() * current.data("index");
+
+      // the next slide
+      let nextElement =
+        $(`.slide[data-index=${current.data("index") + 1}]`) || null;
+      // the previous slide
+      let prevElement =
+        $(`.slide[data-index=${current.data("index") - 1}]`) || null;
+
+      if (sliderScroll >= maxHeight) {
+        current.css("top", `${-$(window).height()}px`);
+
+        if (nextElement) nextElement.addClass("current");
+
+        if (maxHeight < sliderWrapper.height()) current.removeClass("current");
+      } else if (sliderScroll <= minHeight) {
+        current.css("top", "0px");
+
+        if (prevElement) {
+          prevElement.addClass("current");
+          current.removeClass("current");
+        }
+      } else {
+        current.css(
+          "top",
+          `${-sliderScroll + $(window).height() * current.data("index")}px`
+        );
+        if (nextElement) {
+          nextElement.css(
+            "opacity",
+            `${normalize(
+              0,
+              -$(window).height(),
+              0,
+              100,
+              -sliderScroll + $(window).height() * current.data("index")
+            )}%`
+          );
+        }
+      }
     }
   });
 });

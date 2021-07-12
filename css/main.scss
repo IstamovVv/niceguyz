@@ -279,8 +279,6 @@ $pink: rgb(255, 30, 172);
   }
 }
 
-
-
 /* taglines */
 
 .taglines {
@@ -325,4 +323,78 @@ $pink: rgb(255, 30, 172);
   position: relative;
   min-height: 100vh;
   background-color: rebeccapurple;
+}
+
+/*
+* ==========================================
+* SLIDER-SECTION STYLES
+* ==========================================
+*/
+
+.slider-wrapper {
+  overflow: hidden;
+  background-color: black;
+}
+
+.slider {
+  background-color: black;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.slider.active {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  &__content {
+    width: 100%;
+    height: 100%;
+
+    & video {
+      opacity: 0.4;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.slide[data-index="0"] {
+  .slide__content {
+    background-color: #aeaeff;
+  }
+}
+
+.slide[data-index="1"] {
+  .slide__content {
+    background-color: #e62a2a;
+  }
+}
+
+.slide[data-index="2"] {
+  .slide__content {
+    background-color: #e6b52a;
+  }
+}
+
+.slide[data-index="3"] {
+  .slide__content {
+    background-color: #e62a2a;
+  }
+}
+
+.slide[data-index="4"] {
+  .slide__content {
+    background-color: #8888e3;
+  }
 }
