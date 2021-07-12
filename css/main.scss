@@ -56,6 +56,14 @@ $pink: rgb(255, 30, 172);
   border-bottom: 1px solid transparent;
 }
 
+button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
 /*
 * ==========================================
 * FIRST PART STYLES
@@ -355,8 +363,10 @@ $pink: rgb(255, 30, 172);
   left: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 
   &__content {
+    @include flex(column, center, center);
     width: 100%;
     height: 100%;
 
@@ -367,7 +377,89 @@ $pink: rgb(255, 30, 172);
       object-fit: cover;
     }
   }
+
+  &__info {
+    z-index: 2000;
+    position: absolute;
+    @include flex(column, center, center);
+    width: 60%;
+    height: 100%;
+  }
+
+  &__brand-wrapper {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    z-index: 1;
+    width: 100%;
+    @include flex(row, center, center);
+  }
+
+  &__brand {
+    width: 200px;
+  }
+
+  &__logo {
+    width: 400px;
+  }
+
+  &__logo object {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__separator {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 70%;
+    height: 1px;
+    background-color: white;
+  }
+
+  &__text {
+    color: white;
+    font-family: "Proxima Nova", sans-serif;
+    font-size: 1.3rem;
+    text-align: center;
+  }
 }
+
+.buttons {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  @include flex(row, space-around, center);
+  width: 80%;
+
+  &__item {
+    height: 50px;
+    border: 2px solid white;
+    border-radius: 30px;
+    color: white;
+    font-family: "Proxima Nova", sans-serif;
+    font-size: 1rem;
+    text-align: center;
+    transition: all 0.1s ease-in-out;
+  }
+
+  &__item:first-child {
+    width: 270px;
+  }
+
+  &__item:last-child {
+    width: 200px;
+  }
+
+  &__item:first-child:hover {
+    background-color: rgba(255, 64, 30);
+    border: 2px solid rgba(255, 64, 30);
+  }
+
+  &__item:last-child:hover {
+    background-color: rgba(4, 72, 204);
+    border: 2px solid rgba(4, 72, 204);
+  }
+}
+
+/* map the music section */
 
 .slide[data-index="0"] {
   .slide__content {
@@ -375,11 +467,15 @@ $pink: rgb(255, 30, 172);
   }
 }
 
+/* lavka section */
+
 .slide[data-index="1"] {
   .slide__content {
     background-color: #e62a2a;
   }
 }
+
+/* shu section */
 
 .slide[data-index="2"] {
   .slide__content {
@@ -387,14 +483,24 @@ $pink: rgb(255, 30, 172);
   }
 }
 
+/* gold-standart section */
+
 .slide[data-index="3"] {
   .slide__content {
     background-color: #e62a2a;
   }
 }
 
+/* teriberka section */
+
 .slide[data-index="4"] {
-  .slide__content {
-    background-color: #8888e3;
+  .slide {
+    &__content {
+      background-color: #8888e3;
+    }
+
+    &__logo {
+      width: 300px;
+    }
   }
 }

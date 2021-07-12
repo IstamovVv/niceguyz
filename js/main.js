@@ -169,7 +169,11 @@ $(document).ready(function () {
   $(".slide:not(.current)").css("opacity", "0");
 
   // calculate height for slider-wrapper
-  sliderWrapper.css("height", `${100 * sliderLength}vh`);
+  let sliderWrapperHeight = 0;
+  for (let i = 0; i < sliderLength; ++i) {
+    sliderWrapperHeight += $(`.slide[data-index=${i}]`).height();
+  }
+  sliderWrapper.css("height", `${sliderWrapperHeight}px`);
 
   // active class trigger for slider
   $(window).scroll(function () {
@@ -183,6 +187,28 @@ $(document).ready(function () {
     }
   });
 
+  function getMaxHeight(element) {
+    let index = element.data("index");
+    let value = 0;
+    while (index >= 0) {
+      value += $(`.slide[data-index=${index}]`).height();
+      index -= 1;
+    }
+
+    return value;
+  }
+
+  function getMinHeight(element) {
+    let index = element.data("index") - 1;
+    let value = 0;
+    while (index >= 0) {
+      value += $(`.slide[data-index=${index}]`).height();
+      index -= 1;
+    }
+
+    return value;
+  }
+
   $(window).scroll(function () {
     if (slider.hasClass("active")) {
       // scroll inside the slider
@@ -190,9 +216,11 @@ $(document).ready(function () {
       let current = $(".slide.current");
 
       // the boundary when we have to show a new next slide
-      let maxHeight = $(window).height() * (current.data("index") + 1);
+      //let maxHeight = $(window).height() * (current.data("index") + 1);
+      let maxHeight = getMaxHeight(current);
       // the boundary when we have to show a previous slide
-      let minHeight = $(window).height() * current.data("index");
+      //let minHeight = $(window).height() * current.data("index");
+      let minHeight = getMinHeight(current);
 
       // the next slide
       let nextElement =
@@ -202,7 +230,7 @@ $(document).ready(function () {
         $(`.slide[data-index=${current.data("index") - 1}]`) || null;
 
       if (sliderScroll >= maxHeight) {
-        current.css("top", `${-$(window).height()}px`);
+        current.css("top", `${-current.height()}px`);
 
         if (nextElement) nextElement.addClass("current");
 
@@ -215,10 +243,7 @@ $(document).ready(function () {
           current.removeClass("current");
         }
       } else {
-        current.css(
-          "top",
-          `${-sliderScroll + $(window).height() * current.data("index")}px`
-        );
+        current.css("top", `${-sliderScroll + getMinHeight(current)}px`);
         if (nextElement) {
           nextElement.css(
             "opacity",
@@ -227,13 +252,18 @@ $(document).ready(function () {
               -$(window).height(),
               0,
               100,
-              -sliderScroll + $(window).height() * current.data("index")
+              -sliderScroll + getMinHeight(current)
             )}%`
           );
         }
       }
     }
   });
+
+  /* ==========================================
+   * Appearing elements code
+   * ==========================================
+   */
 });
 
 /*---------- ABOUT SECTION END ----------*/
