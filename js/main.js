@@ -199,6 +199,10 @@ $(document).ready(function () {
     let aboutCoords = aboutSection[0].getBoundingClientRect();
 
     if (Math.abs(aboutCoords.top) + $(window).height() >= aboutCoords.height) {
+      let slideInfo = $(".slide.current .slide__info");
+
+      if (!slideInfo.hasClass("animate")) slideInfo.addClass("animate");
+
       $(".slide.current").css(
         "opacity",
         `${normalize($(window).height(), 0, 0, 100, sliderCoords.top)}%`
@@ -276,6 +280,12 @@ $(document).ready(function () {
       } else {
         current.css("top", `${-sliderScroll + getMinHeight(current)}px`);
         if (nextElement) {
+          let nextElementInfo = $(
+            `.slide[data-index=${nextElement.data("index")}] .slide__info`
+          );
+          if (!nextElementInfo.hasClass("animate"))
+            nextElementInfo.addClass("animate");
+
           nextElement.css(
             "opacity",
             `${normalize(

@@ -390,7 +390,7 @@ button {
 .test {
   position: relative;
   min-height: 100vh;
-  background-color: rebeccapurple;
+  background-color: #d13419;
 }
 
 /*
@@ -450,6 +450,9 @@ button {
   align-items: center;
   width: 60%;
   height: 100%;
+}
+.slide__info.animate {
+  animation: fade-up 2s forwards;
 }
 .slide__brand-wrapper {
   margin-top: 2rem;
@@ -545,6 +548,17 @@ button {
 }
 .slide[data-index="4"] .slide__logo {
   width: 300px;
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0px);
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

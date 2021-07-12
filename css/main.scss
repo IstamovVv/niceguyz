@@ -336,7 +336,7 @@ button {
 .test {
   position: relative;
   min-height: 100vh;
-  background-color: rebeccapurple;
+  background-color: #d13419;
 }
 
 /*
@@ -394,6 +394,10 @@ button {
     @include flex(column, center, center);
     width: 60%;
     height: 100%;
+
+    &.animate {
+      animation: fade-up 2s forwards;
+    }
   }
 
   &__brand-wrapper {
@@ -512,5 +516,17 @@ button {
     &__logo {
       width: 300px;
     }
+  }
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  100% {
+    opacity: 100%;
+    transform: translateY(0px);
   }
 }
