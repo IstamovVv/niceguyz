@@ -71,6 +71,7 @@ button {
 */
 
 .first-part {
+  z-index: 10;
   position: relative;
 }
 
@@ -147,6 +148,11 @@ button {
 
 .main-section {
   position: relative;
+  visibility: visible;
+
+  &_hidden {
+    visibility: hidden;
+  }
 
   &__full-screen {
     background-color: #ff401e;
@@ -365,6 +371,10 @@ button {
   height: 100%;
   overflow: hidden;
 
+  &.current {
+    position: fixed;
+  }
+
   &__content {
     @include flex(column, center, center);
     width: 100%;
@@ -437,7 +447,7 @@ button {
     font-family: "Proxima Nova", sans-serif;
     font-size: 1rem;
     text-align: center;
-    transition: all 0.1s ease-in-out;
+    transition: all 0.08s ease-in-out;
   }
 
   &__item:first-child {

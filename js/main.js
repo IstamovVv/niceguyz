@@ -34,6 +34,7 @@ $(document).ready(function () {
   let firstPart = $(".first-part");
 
   /* main-section variables */
+  let mainSection = $(".main-section");
   let brand = $("#main-brand");
   let menu = $(".menu");
 
@@ -58,8 +59,25 @@ $(document).ready(function () {
    * to be smaller when scrolling
    * ==========================================
    */
-  doc.scroll(function () {
+  $(window).scroll(function () {
     brand.width(normalize(0, 300, 400, 200, doc.scrollTop()));
+  });
+
+  /* ==========================================
+   * This code makes the main section to hid when we can't see it
+   * ==========================================
+   */
+
+  $(window).scroll(function () {
+    let aboutCoords = aboutSection[0].getBoundingClientRect();
+
+    if (aboutCoords.top > 0) {
+      if (mainSection.hasClass("main-section_hidden"))
+        mainSection.removeClass("main-section_hidden");
+    } else {
+      if (!mainSection.hasClass("main-section_hidden"))
+        mainSection.addClass("main-section_hidden");
+    }
   });
 
   /* ==========================================
@@ -69,7 +87,7 @@ $(document).ready(function () {
    * ==========================================
    */
 
-  doc.scroll(function () {
+  $(window).scroll(function () {
     let firstPartCoords = firstPart[0].getBoundingClientRect();
 
     if (
@@ -86,7 +104,7 @@ $(document).ready(function () {
 
   /*---------- ABOUT SECTION BEGIN ----------*/
 
-  doc.scroll(function () {
+  $(window).scroll(function () {
     let coords = aboutSection[0].getBoundingClientRect();
 
     // GC - Green Channel
@@ -124,7 +142,7 @@ $(document).ready(function () {
    * ==========================================
    */
 
-  doc.scroll(function () {
+  $(window).scroll(function () {
     let coords = aboutSection[0].getBoundingClientRect();
     let newOpacity = normalize(0, -150, 0, 100, coords.top);
 
@@ -137,7 +155,7 @@ $(document).ready(function () {
    * ==========================================
    */
 
-  doc.scroll(function () {
+  $(window).scroll(function () {
     let items = $(".taglines__item");
     Array.from(items).forEach((item) => {
       let coords = item.getBoundingClientRect();
@@ -146,7 +164,7 @@ $(document).ready(function () {
     });
   });
 
-  doc.scroll(function () {
+  $(window).scroll(function () {
     let coords = aboutSection[0].getBoundingClientRect();
     if (Math.abs(coords.top) + $(window).height() >= coords.height) {
       stripes.addClass("stripe_absolute").removeClass("stripe_fixed");
@@ -174,6 +192,19 @@ $(document).ready(function () {
     sliderWrapperHeight += $(`.slide[data-index=${i}]`).height();
   }
   sliderWrapper.css("height", `${sliderWrapperHeight}px`);
+
+  // this code makes the slider to appear when scrolling
+  $(window).scroll(function () {
+    let sliderCoords = slider[0].getBoundingClientRect();
+    let aboutCoords = aboutSection[0].getBoundingClientRect();
+
+    if (Math.abs(aboutCoords.top) + $(window).height() >= aboutCoords.height) {
+      $(".slide.current").css(
+        "opacity",
+        `${normalize($(window).height(), 0, 0, 100, sliderCoords.top)}%`
+      );
+    }
+  });
 
   // active class trigger for slider
   $(window).scroll(function () {
