@@ -88,12 +88,9 @@ $(document).ready(function () {
    */
 
   $(window).scroll(function () {
-    let firstPartCoords = firstPart[0].getBoundingClientRect();
+    let parentCoords = menu.parent()[0].getBoundingClientRect();
 
-    if (
-      Math.abs(firstPartCoords.top) <
-      firstPart.height() - $(window).height()
-    ) {
+    if (Math.abs(parentCoords.top) < firstPart.height() - $(window).height()) {
       menu.removeClass("menu_sticky-bottom").addClass("menu_fixed");
     } else {
       menu.removeClass("menu_fixed").addClass("menu_sticky-bottom");
@@ -290,7 +287,7 @@ $(document).ready(function () {
             "opacity",
             `${normalize(
               0,
-              -$(window).height(),
+              -current.height(),
               0,
               100,
               -sliderScroll + getMinHeight(current)

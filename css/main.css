@@ -386,13 +386,6 @@ button {
   width: 50%;
 }
 
-/* test section. should be deleted later */
-.test {
-  position: relative;
-  min-height: 100vh;
-  background-color: #d13419;
-}
-
 /*
 * ==========================================
 * SLIDER-SECTION STYLES
@@ -550,6 +543,230 @@ button {
   width: 300px;
 }
 
+/* clients section */
+.slide[data-index="5"] {
+  height: 200vh;
+}
+
+.clients-section {
+  height: 100%;
+  background-color: #ff401e;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.clients-section__text {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  font-size: 28px;
+  font-family: "Proxima Nova", sans-serif;
+}
+.clients-section__brand-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.clients-section__brand {
+  width: 300px;
+}
+
+.clients {
+  margin-top: 2rem;
+  height: 80%;
+  width: 60%;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+}
+.clients__element {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.clients__element img {
+  width: 5%;
+}
+.clients__element object {
+  width: 70%;
+}
+
+/* reviews section */
+.slide[data-index="6"] {
+  height: 400vh;
+}
+
+.reviews-section {
+  border-bottom: 6px solid #ff401e;
+  height: 100%;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.reviews-section__brand-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.reviews-section__brand {
+  width: 300px;
+}
+.reviews-section__text {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  font-size: 28px;
+  font-family: "Proxima Nova", sans-serif;
+}
+
+.reviews {
+  width: 50%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.reviews__item {
+  margin-bottom: 5rem;
+}
+.reviews__text {
+  color: white;
+  font-size: 28px;
+  font-family: "Proxima Nova", sans-serif;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+.reviews__client {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.reviews__client img {
+  margin-right: 2rem;
+  width: 150px;
+}
+
+.client__name {
+  color: #ff401e;
+}
+.client__data {
+  color: white;
+  font-size: 14px;
+  font-family: "Proxima Nova", sans-serif;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+/* Contacts section */
+.slide[data-index="7"] {
+  height: 100vh;
+}
+
+.contacts-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.contacts-section__content {
+  z-index: 1000;
+  position: absolute;
+  top: 6rem;
+  height: 80%;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.contacts-section__brand-wrapper {
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.contacts-section__brand {
+  width: 200px;
+}
+.contacts-section__text {
+  margin-bottom: 1rem;
+  color: white;
+  font-size: 28px;
+  font-family: "Proxima Nova", sans-serif;
+  text-align: center;
+}
+.contacts-section__email {
+  margin-bottom: 1rem;
+  color: #ff401e;
+  font-size: 50px;
+  font-family: "Proxima Nova", sans-serif;
+  text-align: center;
+  cursor: pointer;
+  border-bottom: 3px solid #ff401e;
+  transition: all 0.2s ease-in-out;
+}
+.contacts-section__email:hover {
+  border-bottom: 3px solid transparent;
+}
+.contacts-section__number {
+  margin-bottom: 1rem;
+  color: #ff401e;
+  font-size: 25px;
+  font-family: "Proxima Nova", sans-serif;
+  text-align: center;
+  cursor: pointer;
+}
+
+.socials {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 35%;
+}
+.socials__item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+}
+.socials__item:nth-child(1) object {
+  width: 100%;
+}
+.socials__item:nth-child(2) img {
+  width: 35%;
+}
+.socials__item:nth-child(3) img {
+  width: 100%;
+}
+
+/* keyframes */
 @keyframes fade-up {
   0% {
     opacity: 0;
