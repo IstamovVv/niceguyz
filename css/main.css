@@ -549,6 +549,7 @@ button {
 }
 
 .clients-section {
+  padding-top: 10rem;
   height: 100%;
   background-color: #ff401e;
   display: flex;
@@ -574,8 +575,16 @@ button {
   justify-content: center;
   align-items: center;
 }
+.clients-section__brand-wrapper.fixed {
+  position: fixed;
+  top: 20px;
+}
+.clients-section__brand-wrapper.absolute {
+  position: absolute;
+  top: initial;
+}
 .clients-section__brand {
-  width: 300px;
+  width: 200px;
 }
 
 .clients {
@@ -587,16 +596,16 @@ button {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(4, 1fr);
 }
-.clients__element {
+.clients__item {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.clients__element img {
+.clients__item img {
   width: 5%;
 }
-.clients__element object {
+.clients__item object {
   width: 70%;
 }
 
@@ -621,8 +630,16 @@ button {
   justify-content: center;
   align-items: center;
 }
+.reviews-section__brand-wrapper.fixed {
+  position: fixed;
+  top: 20px;
+}
+.reviews-section__brand-wrapper.absolute {
+  position: absolute;
+  top: initial;
+}
 .reviews-section__brand {
-  width: 300px;
+  width: 200px;
 }
 .reviews-section__text {
   width: 100%;

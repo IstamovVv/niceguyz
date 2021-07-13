@@ -518,6 +518,7 @@ button {
 }
 
 .clients-section {
+  padding-top: 10rem;
   height: 100%;
   background-color: #ff401e;
   @include flex(column, center, center);
@@ -534,10 +535,20 @@ button {
   &__brand-wrapper {
     width: 100%;
     @include flex(row, center, center);
+
+    &.fixed {
+      position: fixed;
+      top: 20px;
+    }
+
+    &.absolute {
+      position: absolute;
+      top: initial;
+    }
   }
 
   &__brand {
-    width: 300px;
+    width: 200px;
   }
 }
 
@@ -550,7 +561,7 @@ button {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(4, 1fr);
 
-  &__element {
+  &__item {
     @include flex(row, center, center);
 
     & img {
@@ -564,6 +575,7 @@ button {
 }
 
 /* reviews section */
+
 .slide[data-index="6"] {
   height: 400vh;
 }
@@ -577,10 +589,21 @@ button {
   &__brand-wrapper {
     width: 100%;
     @include flex(row, center, center);
+
+    &.fixed {
+      position: fixed;
+      top: 20px;
+    }
+
+    &.absolute {
+      position: absolute;
+      top: initial;
+    }
+
   }
 
   &__brand {
-    width: 300px;
+    width: 200px;
   }
 
   &__text {
@@ -719,6 +742,7 @@ button {
 }
 
 /* keyframes */
+
 @keyframes fade-up {
   0% {
     opacity: 0;

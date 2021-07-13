@@ -30,9 +30,6 @@ function normalize(firstLeft, firstRight, secondLeft, secondRight, firstValue) {
 $(document).ready(function () {
   let doc = $(document);
 
-  /* first part variable */
-  let firstPart = $(".first-part");
-
   /* main-section variables */
   let mainSection = $(".main-section");
   let brand = $("#main-brand");
@@ -90,7 +87,7 @@ $(document).ready(function () {
   $(window).scroll(function () {
     let parentCoords = menu.parent()[0].getBoundingClientRect();
 
-    if (Math.abs(parentCoords.top) < firstPart.height() - $(window).height()) {
+    if (Math.abs(parentCoords.top) < parentCoords.height - $(window).height()) {
       menu.removeClass("menu_sticky-bottom").addClass("menu_fixed");
     } else {
       menu.removeClass("menu_fixed").addClass("menu_sticky-bottom");
@@ -147,6 +144,21 @@ $(document).ready(function () {
   });
 
   /* ==========================================
+   * This code makes the stripes to stick to
+   * the bottom of its parent when scrolling
+   * ==========================================
+   */
+
+  $(window).scroll(function () {
+    let coords = aboutSection[0].getBoundingClientRect();
+    if (Math.abs(coords.top) + $(window).height() >= coords.height) {
+      stripes.addClass("stripe_absolute").removeClass("stripe_fixed");
+    } else {
+      stripes.addClass("stripe_fixed").removeClass("stripe_absolute");
+    }
+  });
+
+  /* ==========================================
    * This code makes the taglines
    * disappear when scrolling
    * ==========================================
@@ -159,15 +171,6 @@ $(document).ready(function () {
       let newOpacity = normalize(300, 170, 100, 0, coords.top);
       $(item).css("opacity", `${newOpacity}%`);
     });
-  });
-
-  $(window).scroll(function () {
-    let coords = aboutSection[0].getBoundingClientRect();
-    if (Math.abs(coords.top) + $(window).height() >= coords.height) {
-      stripes.addClass("stripe_absolute").removeClass("stripe_fixed");
-    } else {
-      stripes.addClass("stripe_fixed").removeClass("stripe_absolute");
-    }
   });
 
   /* ==========================================
@@ -200,7 +203,7 @@ $(document).ready(function () {
 
       if (!slideInfo.hasClass("animate")) slideInfo.addClass("animate");
 
-      $(".slide.current").css(
+      $(".slider").css(
         "opacity",
         `${normalize($(window).height(), 0, 0, 100, sliderCoords.top)}%`
       );
@@ -297,11 +300,121 @@ $(document).ready(function () {
       }
     }
   });
+  /*---------- ABOUT SECTION END ----------*/
+
+  /*---------- CLIENTS SECTION START ----------*/
 
   /* ==========================================
-   * Appearing elements code
+   * Disappearing client logos
    * ==========================================
    */
-});
 
-/*---------- ABOUT SECTION END ----------*/
+  $(window).scroll(function () {
+    let items = Array.from($(".clients__item")).concat(
+      Array.from($(".clients-section__text"))
+    );
+
+    items.forEach((item) => {
+      let coords = item.getBoundingClientRect();
+      $(item).css("opacity", `${normalize(200, 20, 100, 0, coords.top)}%`);
+    });
+  });
+
+  /* ==========================================
+   * Sticky brand logo in the clients section
+   * ==========================================
+   */
+
+  $(window).scroll(function () {
+    let coords = $(".clients-section")[0].getBoundingClientRect();
+    let brand = $(".clients-section__brand-wrapper");
+
+    if (Math.abs(coords.top) >= coords.height - $(window).height()) {
+      brand.removeClass("fixed");
+      brand.addClass("absolute");
+      brand.css("top", `${20 + coords.height - $(window).height()}px`);
+    } else {
+      brand.removeClass("absolute");
+      brand.addClass("fixed");
+      brand.css("top", "20px");
+    }
+  });
+
+  /* ==========================================
+   * Sticky menu in the clients section
+   * ==========================================
+   */
+
+  $(window).scroll(function () {
+    let coords = $(".clients-section")[0].getBoundingClientRect();
+    let menu = $(".clients-section__menu");
+
+    if (Math.abs(coords.top) < coords.height - $(window).height()) {
+      menu.removeClass("menu_sticky-bottom");
+      menu.addClass("menu_fixed");
+    } else {
+      menu.removeClass("menu_fixed");
+      menu.addClass("menu_sticky-bottom");
+    }
+  });
+
+  /*---------- CLIENTS SECTION END ----------*/
+
+  /*---------- REVIEWS SECTION START ----------*/
+
+  /* ==========================================
+   * Disappearing review items
+   * ==========================================
+   */
+
+  $(window).scroll(function () {
+    let items = Array.from($(".reviews__text"))
+      .concat(Array.from($(".reviews__client")))
+      .concat(Array.from($(".reviews-section__text")));
+
+    items.forEach((item) => {
+      let coords = item.getBoundingClientRect();
+      $(item).css("opacity", `${normalize(150, 50, 100, 0, coords.top)}%`);
+    });
+  });
+
+  /* ==========================================
+   * Sticky brand logo in the reviews section
+   * ==========================================
+   */
+
+  $(window).scroll(function () {
+    let coords = $(".reviews-section")[0].getBoundingClientRect();
+    let brand = $(".reviews-section__brand-wrapper");
+
+    if (Math.abs(coords.top) >= coords.height - $(window).height()) {
+      brand.removeClass("fixed");
+      brand.addClass("absolute");
+      brand.css("top", `${20 + coords.height - $(window).height()}px`);
+    } else {
+      brand.removeClass("absolute");
+      brand.addClass("fixed");
+      brand.css("top", "20px");
+    }
+  });
+
+  /* ==========================================
+   * Sticky menu in the reviews section
+   * ==========================================
+   */
+
+  $(window).scroll(function () {
+    let coords = $(".reviews-section")[0].getBoundingClientRect();
+    let menu = $(".reviews-section__menu");
+
+    if (Math.abs(coords.top) < coords.height - $(window).height()) {
+      menu.removeClass("menu_sticky-bottom");
+      menu.addClass("menu_fixed");
+    } else {
+      menu.removeClass("menu_fixed");
+      menu.addClass("menu_sticky-bottom");
+    }
+  });
+
+  /*---------- REVIEWS SECTION END ----------*/
+});
