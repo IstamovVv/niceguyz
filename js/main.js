@@ -268,6 +268,7 @@ $(document).ready(function () {
         current.css("top", `${-current.height()}px`);
 
         if (nextElement) nextElement.addClass("current");
+        nextElement.css("opacity", "100%");
 
         if (maxHeight < sliderWrapper.height()) current.removeClass("current");
       } else if (sliderScroll <= minHeight) {

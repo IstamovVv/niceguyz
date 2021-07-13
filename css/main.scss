@@ -726,17 +726,13 @@ button {
     @include flex(row, center, center);
     height: 50px;
     width: 50px;
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
 
-    &:nth-child(1) object {
-      width: 100%;
-    }
-
-    &:nth-child(2) img {
-      width: 35%;
-    }
-
-    &:nth-child(3) img {
-      width: 100%;
+    &:hover {
+      color: #ff401e;
     }
   }
 }

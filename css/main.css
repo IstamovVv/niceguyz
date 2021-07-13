@@ -772,15 +772,13 @@ button {
   align-items: center;
   height: 50px;
   width: 50px;
+  color: white;
+  font-size: 35px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
-.socials__item:nth-child(1) object {
-  width: 100%;
-}
-.socials__item:nth-child(2) img {
-  width: 35%;
-}
-.socials__item:nth-child(3) img {
-  width: 100%;
+.socials__item:hover {
+  color: #ff401e;
 }
 
 /* keyframes */
