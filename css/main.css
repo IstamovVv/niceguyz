@@ -185,13 +185,13 @@ button {
   font-size: 20px;
 }
 
-.menu_fixed {
+.menu.fixed {
   position: fixed;
   top: 0;
   bottom: auto;
   left: 0;
 }
-.menu_sticky-bottom {
+.menu.sticky-bottom {
   position: absolute;
   top: auto;
   bottom: 0;
@@ -332,11 +332,11 @@ button {
   width: 1px;
   background-color: white;
 }
-.stripe_fixed {
+.stripe.fixed {
   position: fixed;
   top: 15rem;
 }
-.stripe_absolute {
+.stripe.absolute {
   position: absolute;
   top: initial;
   bottom: 0;

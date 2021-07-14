@@ -126,14 +126,14 @@ button {
 }
 
 .menu {
-  &_fixed {
+  &.fixed {
     position: fixed;
     top: 0;
     bottom: auto;
     left: 0;
   }
 
-  &_sticky-bottom {
+  &.sticky-bottom {
     position: absolute;
     top: auto;
     bottom: 0;
@@ -281,12 +281,12 @@ button {
   width: 1px;
   background-color: white;
 
-  &_fixed {
+  &.fixed {
     position: fixed;
     top: 15rem;
   }
 
-  &_absolute {
+  &.absolute {
     position: absolute;
     top: initial;
     bottom: 0;

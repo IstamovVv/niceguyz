@@ -50,7 +50,7 @@ class ScrollDistributor {
         let condition = pair[0]; // function
         let dataObject = pair[1]; // [{isActive, toExecute, object}...]
 
-        if (condition) {
+        if (condition()) {
           dataObject.forEach((element) => {
             element.isActive = this._checker(element.object);
             if (element.isActive) element.toExecute();
@@ -59,6 +59,7 @@ class ScrollDistributor {
       }
     }.bind(this);
 
+    this._initializers = [];
     this._maxDistance = $(window).height();
   }
 
@@ -111,9 +112,16 @@ class ScrollDistributor {
     this._data.delete(predicate);
   }
 
+  addInitializer(func) {
+    if (typeof func !== "function") return null;
+
+    this._initializers.push(func);
+  }
+
   run() {
     let self = this;
     $(function () {
+      self._initializers.forEach((func) => func());
       $(window).bind("scroll", self._mainFunc);
     });
   }
@@ -145,20 +153,22 @@ class ScrollDistributor {
 }
 
 $(document).ready(function () {
+  let distributor = new ScrollDistributor();
   let doc = $(document);
+  let firstPart = $(".first-part");
 
   /* main-section variables */
   let mainSection = $(".main-section");
   let brand = $("#main-brand");
-  let menu = $(".menu");
+  let mainMenu = $(".menu");
 
   /* about-section variables */
   let aboutSection = $(".about-section");
-  let firstFounder = $("#first-founder");
-  let secondFounder = $("#second-founder");
   let stripes = $(".stripe");
   let leftStripe = $(".stripe_left");
   let rightStripe = $(".stripe_right");
+  let firstFounder = $("#first-founder");
+  let secondFounder = $("#second-founder");
 
   /* slider section variables */
   let slider = $(".slider");
@@ -166,33 +176,147 @@ $(document).ready(function () {
   let sliderWrapper = $(".slider-wrapper");
   let sliderLength = Array.from($(".slider .slide")).length;
 
-  /*---------- MAIN SECTION BEGIN ----------*/
+  /* clients section variables */
+  let clientsSection = $(".clients-section");
+  let clientsSectionMenu = $(".clients-section__menu");
+  let clientsSectionBrandWrapper = $(".clients-section__brand-wrapper");
+
+  /* reviews section variables */
+  let reviewsSection = $(".reviews-section");
+  let reviewsSectionMenu = $(".reviews-section__menu");
+  let reviewsSectionBrandWrapper = $(".reviews-section__brand-wrapper");
+
+  /*---------- PREDICATES ----------*/
+
+  function alwaysTrue() {
+    return true;
+  }
+
+  function isEndOfObject(object) {
+    let coords = object[0].getBoundingClientRect();
+    return Math.abs(coords.top) >= coords.height - $(window).height();
+  }
+
+  function isAboveObject(object) {
+    let coords = object[0].getBoundingClientRect();
+    return coords.top > 0;
+  }
+
+  function isAboveAboutSection() {
+    return isAboveObject(aboutSection);
+  }
+
+  function isInsideAboutSection() {
+    return !isAboveAboutSection();
+  }
+
+  function isEndOfAboutSection() {
+    return isEndOfObject(aboutSection);
+  }
+
+  function isNotEndOfAboutSection() {
+    return !isEndOfAboutSection();
+  }
+
+  function isEndOfFirstPart() {
+    return isEndOfObject(firstPart);
+  }
+
+  function isNotEndOfFirstPart() {
+    return !isEndOfFirstPart();
+  }
+
+  function isAboveSlider() {
+    return isAboveObject(slider);
+  }
+
+  function isInsideSlider() {
+    return !isAboveSlider();
+  }
+
+  function isEndOfClientsSection() {
+    return isEndOfObject(clientsSection);
+  }
+
+  function isNotEndOfClientsSection() {
+    return !isEndOfClientsSection();
+  }
+
+  function isEndOfReviewsSection() {
+    return isEndOfObject(reviewsSection);
+  }
+
+  function isNotEndOfReviewsSection() {
+    return !isEndOfReviewsSection();
+  }
+  /*---------- END OF PREDICATES ----------*/
+
+  /*---------- INITIALIZING FUNCTIONS ----------*/
 
   /* ==========================================
-   * This code makes the brand logo
+   * This code makes the stripes
+   * to be centered on team-header__item elements
+   * ==========================================
+   */
+
+  function centerStripes() {
+    let firstCoords = firstFounder[0].getBoundingClientRect();
+    leftStripe.css("left", `${firstCoords.left + firstFounder.width() / 2}px`);
+
+    let secondCoords = secondFounder[0].getBoundingClientRect();
+    rightStripe.css(
+      "left",
+      `${secondCoords.left + secondFounder.width() / 2}px`
+    );
+  }
+  /* ==========================================
+   * Slider section code
+   * ==========================================
+   */
+
+  function initializeSlider() {
+    // z-index for slides
+    for (let i = 0; i < sliderLength; ++i) {
+      $(`.slide[data-index=${i}]`).css("z-index", `${sliderLength - i - 1}`);
+    }
+
+    // All slides except the first should be transparent
+    $(".slide:not(.current)").css("opacity", "0");
+
+    // calculate height for slider-wrapper
+    let sliderWrapperHeight = 0;
+    for (let i = 0; i < sliderLength; ++i) {
+      sliderWrapperHeight += $(`.slide[data-index=${i}]`).height();
+    }
+    sliderWrapper.css("height", `${sliderWrapperHeight}px`);
+  }
+
+  /*---------- END OF INITIALIZING FUNCTIONS ----------*/
+
+  /*---------- EXECUTABLE FUNCTIONS ----------*/
+
+  /* ==========================================
+   * This function makes the brand logo
    * to be smaller when scrolling
    * ==========================================
    */
-  $(window).scroll(function () {
+
+  function normalizeMainBrandLogo() {
     brand.width(normalize(0, 300, 400, 200, doc.scrollTop()));
-  });
+  }
 
   /* ==========================================
    * This code makes the main section to hid when we can't see it
    * ==========================================
    */
 
-  $(window).scroll(function () {
-    let aboutCoords = aboutSection[0].getBoundingClientRect();
+  function hidMainSection() {
+    mainSection.addClass("main-section_hidden");
+  }
 
-    if (aboutCoords.top > 0) {
-      if (mainSection.hasClass("main-section_hidden"))
-        mainSection.removeClass("main-section_hidden");
-    } else {
-      if (!mainSection.hasClass("main-section_hidden"))
-        mainSection.addClass("main-section_hidden");
-    }
-  });
+  function showMainSection() {
+    mainSection.removeClass("main-section_hidden");
+  }
 
   /* ==========================================
    * This code makes a menu
@@ -201,21 +325,29 @@ $(document).ready(function () {
    * ==========================================
    */
 
-  $(window).scroll(function () {
-    let parentCoords = menu.parent()[0].getBoundingClientRect();
+  function fixMenu(menu) {
+    menu.removeClass("sticky-bottom").addClass("fixed");
+  }
 
-    if (Math.abs(parentCoords.top) < parentCoords.height - $(window).height()) {
-      menu.removeClass("menu_sticky-bottom").addClass("menu_fixed");
-    } else {
-      menu.removeClass("menu_fixed").addClass("menu_sticky-bottom");
-    }
-  });
+  function stickMenu(menu) {
+    menu.removeClass("fixed").addClass("sticky-bottom");
+  }
 
-  /*---------- MAIN SECTION END ----------*/
+  function fixMainMenu() {
+    fixMenu(mainMenu);
+  }
 
-  /*---------- ABOUT SECTION BEGIN ----------*/
+  function stickMainMenu() {
+    stickMenu(mainMenu);
+  }
 
-  $(window).scroll(function () {
+  /* ==========================================
+   * This code makes the about section
+   * to flow from one color to another
+   * ==========================================
+   */
+
+  function flowAboutSectionColor() {
     let coords = aboutSection[0].getBoundingClientRect();
 
     // GC - Green Channel
@@ -233,19 +365,7 @@ $(document).ready(function () {
       "background-color",
       `rgb(255, ${GCCurrent}, ${BCCurrent})`
     );
-  });
-
-  /* ==========================================
-   * This code makes the stripes
-   * to be centered on team-header__item elements
-   * ==========================================
-   */
-
-  let firstCoords = firstFounder[0].getBoundingClientRect();
-  leftStripe.css("left", `${firstCoords.left + firstFounder.width() / 2}px`);
-
-  let secondCoords = secondFounder[0].getBoundingClientRect();
-  rightStripe.css("left", `${secondCoords.left + secondFounder.width() / 2}px`);
+  }
 
   /* ==========================================
    * This code makes the stripes
@@ -253,12 +373,12 @@ $(document).ready(function () {
    * ==========================================
    */
 
-  $(window).scroll(function () {
+  function showAboutStripes() {
     let coords = aboutSection[0].getBoundingClientRect();
     let newOpacity = normalize(0, -150, 0, 100, coords.top);
 
     stripes.css("opacity", `${newOpacity}%`);
-  });
+  }
 
   /* ==========================================
    * This code makes the stripes to stick to
@@ -266,14 +386,13 @@ $(document).ready(function () {
    * ==========================================
    */
 
-  $(window).scroll(function () {
-    let coords = aboutSection[0].getBoundingClientRect();
-    if (Math.abs(coords.top) + $(window).height() >= coords.height) {
-      stripes.addClass("stripe_absolute").removeClass("stripe_fixed");
-    } else {
-      stripes.addClass("stripe_fixed").removeClass("stripe_absolute");
-    }
-  });
+  function fixStripes() {
+    stripes.addClass("fixed").removeClass("absolute");
+  }
+
+  function stickStripes() {
+    stripes.addClass("absolute").removeClass("fixed");
+  }
 
   /* ==========================================
    * This code makes the taglines
@@ -281,63 +400,54 @@ $(document).ready(function () {
    * ==========================================
    */
 
-  $(window).scroll(function () {
+  function hidTagLines() {
     let items = $(".taglines__item");
+
     Array.from(items).forEach((item) => {
       let coords = item.getBoundingClientRect();
       let newOpacity = normalize(300, 170, 100, 0, coords.top);
       $(item).css("opacity", `${newOpacity}%`);
     });
-  });
+  }
 
   /* ==========================================
-   * Slider section code
+   * This code makes the slider
+   * to appear when scrolling
    * ==========================================
    */
 
-  // z-index for slides
-  for (let i = 0; i < sliderLength; ++i) {
-    $(`.slide[data-index=${i}]`).css("z-index", `${sliderLength - i - 1}`);
-  }
-
-  // All slides except the first should be transparent
-  $(".slide:not(.current)").css("opacity", "0");
-
-  // calculate height for slider-wrapper
-  let sliderWrapperHeight = 0;
-  for (let i = 0; i < sliderLength; ++i) {
-    sliderWrapperHeight += $(`.slide[data-index=${i}]`).height();
-  }
-  sliderWrapper.css("height", `${sliderWrapperHeight}px`);
-
-  // this code makes the slider to appear when scrolling
-  $(window).scroll(function () {
+  function showSlider() {
     let sliderCoords = slider[0].getBoundingClientRect();
-    let aboutCoords = aboutSection[0].getBoundingClientRect();
+    let slideInfo = $(".slide.current .slide__info");
 
-    if (Math.abs(aboutCoords.top) + $(window).height() >= aboutCoords.height) {
-      let slideInfo = $(".slide.current .slide__info");
+    if (!slideInfo.hasClass("animate")) slideInfo.addClass("animate");
 
-      if (!slideInfo.hasClass("animate")) slideInfo.addClass("animate");
+    $(".slider").css(
+      "opacity",
+      `${normalize($(window).height(), 0, 0, 100, sliderCoords.top)}%`
+    );
+  }
 
-      $(".slider").css(
-        "opacity",
-        `${normalize($(window).height(), 0, 0, 100, sliderCoords.top)}%`
-      );
-    }
-  });
+  /* ==========================================
+   * This code triggers
+   * the 'active' class for the slider
+   * ==========================================
+   */
 
-  // active class trigger for slider
-  $(window).scroll(function () {
-    let aboutCoords = aboutSection[0].getBoundingClientRect();
+  function activateSlider() {
+    slider.addClass("active");
+  }
 
-    if (-aboutCoords.top >= aboutCoords.height) {
-      slider.addClass("active");
-    } else {
-      $(".slide").css("top", "0");
-      slider.removeClass("active");
-    }
-  });
+  function deactivateSlider() {
+    $(".slide").css("top", "0");
+    slider.removeClass("active");
+  }
+
+  /* ==========================================
+   * This code controls
+   * the work of the slider
+   * ==========================================
+   */
 
   function getMaxHeight(element) {
     let index = element.data("index");
@@ -361,17 +471,13 @@ $(document).ready(function () {
     return value;
   }
 
-  $(window).scroll(function () {
+  function sliderController() {
     if (slider.hasClass("active")) {
       // scroll inside the slider
       let sliderScroll = $(window).scrollTop() - sliderCoords.top;
       let current = $(".slide.current");
 
-      // the boundary when we have to show a new next slide
-      //let maxHeight = $(window).height() * (current.data("index") + 1);
       let maxHeight = getMaxHeight(current);
-      // the boundary when we have to show a previous slide
-      //let minHeight = $(window).height() * current.data("index");
       let minHeight = getMinHeight(current);
 
       // the next slide
@@ -417,17 +523,14 @@ $(document).ready(function () {
         }
       }
     }
-  });
-  /*---------- ABOUT SECTION END ----------*/
-
-  /*---------- CLIENTS SECTION START ----------*/
+  }
 
   /* ==========================================
    * Disappearing client logos
    * ==========================================
    */
 
-  $(window).scroll(function () {
+  function showClientLogos() {
     let items = Array.from($(".clients__item")).concat(
       Array.from($(".clients-section__text"))
     );
@@ -436,56 +539,54 @@ $(document).ready(function () {
       let coords = item.getBoundingClientRect();
       $(item).css("opacity", `${normalize(200, 20, 100, 0, coords.top)}%`);
     });
-  });
+  }
 
   /* ==========================================
-   * Sticky brand logo in the clients section
+   * Sticky brand logo code
    * ==========================================
    */
 
-  $(window).scroll(function () {
-    let coords = $(".clients-section")[0].getBoundingClientRect();
-    let brand = $(".clients-section__brand-wrapper");
+  function fixBrandLogo(logo, offset) {
+    logo.removeClass("absolute");
+    logo.addClass("fixed");
+    logo.css("top", `${offset}px`);
+  }
 
-    if (Math.abs(coords.top) >= coords.height - $(window).height()) {
-      brand.removeClass("fixed");
-      brand.addClass("absolute");
-      brand.css("top", `${20 + coords.height - $(window).height()}px`);
-    } else {
-      brand.removeClass("absolute");
-      brand.addClass("fixed");
-      brand.css("top", "20px");
-    }
-  });
+  function stickBrandLogo(section, logo, offset) {
+    let coords = section[0].getBoundingClientRect();
+
+    logo.removeClass("fixed");
+    logo.addClass("absolute");
+    logo.css("top", `${offset + coords.height - $(window).height()}px`);
+  }
+
+  function fixClientsBrandLogo() {
+    fixBrandLogo(clientsSectionBrandWrapper, 20);
+  }
+
+  function stickClientsBrandLogo() {
+    stickBrandLogo(clientsSection, clientsSectionBrandWrapper, 20);
+  }
 
   /* ==========================================
    * Sticky menu in the clients section
    * ==========================================
    */
 
-  $(window).scroll(function () {
-    let coords = $(".clients-section")[0].getBoundingClientRect();
-    let menu = $(".clients-section__menu");
+  function fixClientsMenu() {
+    fixMenu(clientsSectionMenu);
+  }
 
-    if (Math.abs(coords.top) < coords.height - $(window).height()) {
-      menu.removeClass("menu_sticky-bottom");
-      menu.addClass("menu_fixed");
-    } else {
-      menu.removeClass("menu_fixed");
-      menu.addClass("menu_sticky-bottom");
-    }
-  });
-
-  /*---------- CLIENTS SECTION END ----------*/
-
-  /*---------- REVIEWS SECTION START ----------*/
+  function stickClientsMenu() {
+    stickMenu(clientsSectionMenu);
+  }
 
   /* ==========================================
-   * Disappearing review items
+   * This code hides the review items
    * ==========================================
    */
 
-  $(window).scroll(function () {
+  function hidReviewsItems() {
     let items = Array.from($(".reviews__text"))
       .concat(Array.from($(".reviews__client")))
       .concat(Array.from($(".reviews-section__text")));
@@ -494,45 +595,92 @@ $(document).ready(function () {
       let coords = item.getBoundingClientRect();
       $(item).css("opacity", `${normalize(150, 50, 100, 0, coords.top)}%`);
     });
-  });
+  }
 
   /* ==========================================
    * Sticky brand logo in the reviews section
    * ==========================================
    */
 
-  $(window).scroll(function () {
-    let coords = $(".reviews-section")[0].getBoundingClientRect();
-    let brand = $(".reviews-section__brand-wrapper");
+  function fixReviewsBrandLogo() {
+    fixBrandLogo(reviewsSectionBrandWrapper, 20);
+  }
 
-    if (Math.abs(coords.top) >= coords.height - $(window).height()) {
-      brand.removeClass("fixed");
-      brand.addClass("absolute");
-      brand.css("top", `${20 + coords.height - $(window).height()}px`);
-    } else {
-      brand.removeClass("absolute");
-      brand.addClass("fixed");
-      brand.css("top", "20px");
-    }
-  });
+  function stickReviewsBrandLogo() {
+    stickBrandLogo(reviewsSection, reviewsSectionBrandWrapper, 20);
+  }
 
   /* ==========================================
    * Sticky menu in the reviews section
    * ==========================================
    */
 
-  $(window).scroll(function () {
-    let coords = $(".reviews-section")[0].getBoundingClientRect();
-    let menu = $(".reviews-section__menu");
+  function fixReviewsMenu() {
+    fixMenu(reviewsSectionMenu);
+  }
 
-    if (Math.abs(coords.top) < coords.height - $(window).height()) {
-      menu.removeClass("menu_sticky-bottom");
-      menu.addClass("menu_fixed");
-    } else {
-      menu.removeClass("menu_fixed");
-      menu.addClass("menu_sticky-bottom");
-    }
-  });
+  function stickReviewsMenu() {
+    stickMenu(reviewsSectionMenu);
+  }
 
-  /*---------- REVIEWS SECTION END ----------*/
+  /*---------- END OF EXECUTABLE FUNCTIONS ----------*/
+
+  /*---------- FUNCTIONS BINDING ----------*/
+
+  distributor.addInitializer(centerStripes);
+  distributor.addInitializer(initializeSlider);
+
+  distributor.set(isNotEndOfAboutSection, normalizeMainBrandLogo, brand);
+
+  distributor.set(isAboveAboutSection, showMainSection, mainSection);
+  distributor.set(isInsideAboutSection, hidMainSection, aboutSection);
+
+  distributor.set(isEndOfFirstPart, stickMainMenu, firstPart);
+  distributor.set(isNotEndOfFirstPart, fixMainMenu, firstPart);
+
+  distributor.set(alwaysTrue, flowAboutSectionColor, aboutSection);
+  distributor.set(alwaysTrue, showAboutStripes, aboutSection);
+
+  distributor.set(isEndOfAboutSection, stickStripes, aboutSection);
+  distributor.set(isNotEndOfAboutSection, fixStripes, aboutSection);
+
+  distributor.set(alwaysTrue, hidTagLines, aboutSection);
+
+  distributor.set(isEndOfAboutSection, showSlider, slider);
+
+  distributor.set(isAboveSlider, deactivateSlider, slider);
+  distributor.set(isInsideSlider, activateSlider, slider);
+
+  distributor.set(alwaysTrue, sliderController, slider);
+  distributor.set(alwaysTrue, showClientLogos, clientsSection);
+
+  distributor.set(isEndOfClientsSection, stickClientsBrandLogo, clientsSection);
+  distributor.set(
+    isNotEndOfClientsSection,
+    fixClientsBrandLogo,
+    clientsSection
+  );
+
+  distributor.set(isEndOfClientsSection, stickClientsMenu, clientsSection);
+  distributor.set(isNotEndOfClientsSection, fixClientsMenu, clientsSection);
+
+  distributor.set(alwaysTrue, hidReviewsItems, reviewsSection);
+
+  distributor.set(isEndOfReviewsSection, stickReviewsBrandLogo, reviewsSection);
+  distributor.set(
+    isNotEndOfReviewsSection,
+    fixReviewsBrandLogo,
+    reviewsSection
+  );
+
+  distributor.set(isEndOfReviewsSection, stickReviewsMenu, reviewsSection);
+  distributor.set(isNotEndOfReviewsSection, fixReviewsMenu, reviewsSection);
+
+  /*---------- END OF FUNCTIONS BINDING ----------*/
+
+  /*---------- DISTRIBUTOR RUNNING ----------*/
+
+  distributor.run();
+
+  /*---------- END OF DISTRIBUTOR RUNNING ----------*/
 });
