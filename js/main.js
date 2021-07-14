@@ -27,6 +27,123 @@ function normalize(firstLeft, firstRight, secondLeft, secondRight, firstValue) {
   return secondLeft + (secondRight - secondLeft) * ratio;
 }
 
+class ScrollDistributor {
+  constructor() {
+    this._data = new Map();
+    this._checker = function (object) {
+      // if checker returns true, we should activate objects
+      let coords = $(object)[0].getBoundingClientRect();
+      let top =
+        coords.top >= 0 ? coords.top : Math.abs(coords.top) - coords.height;
+
+      return top <= this.maxDistance;
+    };
+
+    this._mainFunc = function () {
+      /* ==========================================
+       * _data is an associative container:
+       * key - predicate
+       * value - [{isActive, toExecute, object}...]
+       * ==========================================
+       */
+      for (let pair of this._data) {
+        let condition = pair[0]; // function
+        let dataObject = pair[1]; // [{isActive, toExecute, object}...]
+
+        if (condition) {
+          dataObject.forEach((element) => {
+            element.isActive = this._checker(element.object);
+            if (element.isActive) element.toExecute();
+          });
+        }
+      }
+    }.bind(this);
+
+    this._maxDistance = $(window).height();
+  }
+
+  get maxDistance() {
+    return this._maxDistance;
+  }
+
+  set maxDistance(value) {
+    this._maxDistance = value;
+  }
+
+  set(predicate, func, object) {
+    if (typeof predicate !== "function") return false;
+    if (typeof func !== "function") return false;
+
+    if (this._data.has(predicate)) {
+      let arr = this._data.get(predicate); // [{isActive, toExecute, object}...]
+      let isFuncExist = false;
+
+      // if the same function is exists in _data object, we don't need to add it
+      for (let i = 0; i < arr.length; ++i) {
+        let element = arr[i].toExecute;
+        if (element === func) {
+          isFuncExist = true;
+          break;
+        }
+      }
+
+      if (isFuncExist) return false;
+
+      this._data.get(predicate).push({
+        isActive: true,
+        toExecute: func,
+        object: object,
+      });
+    } else {
+      this._data.set(predicate, [
+        {
+          isActive: true,
+          toExecute: func,
+          object: object,
+        },
+      ]);
+    }
+
+    return true;
+  }
+
+  erase(predicate) {
+    this._data.delete(predicate);
+  }
+
+  run() {
+    let self = this;
+    $(function () {
+      $(window).bind("scroll", self._mainFunc);
+    });
+  }
+
+  stop() {
+    let self = this;
+    $(function () {
+      $(window).unbind("scroll", self._mainFunc);
+    });
+  }
+
+  activate(predicate) {
+    if (!this._data.has(predicate)) return false;
+
+    this._data.get(predicate).isActive = true;
+  }
+
+  deactivate(predicate) {
+    if (!this._data.has(predicate)) return false;
+
+    this._data.get(predicate).isActive = false;
+  }
+
+  isActive(predicate) {
+    if (!this._data.has(predicate)) return null;
+
+    return this._data.get(predicate).isActive;
+  }
+}
+
 $(document).ready(function () {
   let doc = $(document);
 
