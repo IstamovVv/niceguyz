@@ -133,18 +133,6 @@ class ScrollDistributor {
     });
   }
 
-  activate(predicate) {
-    if (!this._data.has(predicate)) return false;
-
-    this._data.get(predicate).isActive = true;
-  }
-
-  deactivate(predicate) {
-    if (!this._data.has(predicate)) return false;
-
-    this._data.get(predicate).isActive = false;
-  }
-
   isActive(predicate) {
     if (!this._data.has(predicate)) return null;
 
@@ -232,6 +220,15 @@ $(document).ready(function () {
 
   function isInsideSlider() {
     return !isAboveSlider();
+  }
+
+  function test1() {
+    let coords = aboutSection[0].getBoundingClientRect();
+    return -coords.top >= coords.height;
+  }
+
+  function test2() {
+    return !test1();
   }
 
   function isEndOfClientsSection() {
@@ -497,7 +494,7 @@ $(document).ready(function () {
       } else if (sliderScroll <= minHeight) {
         current.css("top", "0px");
 
-        if (prevElement) {
+        if (prevElement.html()) {
           prevElement.addClass("current");
           current.removeClass("current");
         }
@@ -648,8 +645,8 @@ $(document).ready(function () {
 
   distributor.set(isEndOfAboutSection, showSlider, slider);
 
-  distributor.set(isAboveSlider, deactivateSlider, slider);
-  distributor.set(isInsideSlider, activateSlider, slider);
+  distributor.set(test2, deactivateSlider, slider);
+  distributor.set(test1, activateSlider, slider);
 
   distributor.set(alwaysTrue, sliderController, slider);
   distributor.set(alwaysTrue, showClientLogos, clientsSection);
