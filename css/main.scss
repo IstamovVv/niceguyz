@@ -64,6 +64,21 @@ button {
   background-color: transparent;
   cursor: pointer;
 }
+
+html::-webkit-scrollbar {
+  width: 0;
+  background-color: #f9f9fd;
+}
+
+.text-wrapper_bold-white {
+  width: 100%;
+  @include flex(row, center, center);
+  text-align: center;
+  color: white;
+  font-size: 28px;
+  font-family: "Proxima Nova", sans-serif
+}
+
 /*
 * ==========================================
 * FIRST PART STYLES
@@ -239,6 +254,14 @@ button {
   padding-bottom: 1px; // to avoid margin collapsing
   position: relative;
   background-color: $peach;
+
+  &__taglines {
+    margin-top: 20rem;
+  }
+
+  & .taglines__item {
+    margin-bottom: 15rem;
+  }
 }
 
 /* team header */
@@ -297,13 +320,11 @@ button {
 
 .taglines {
   @include flex(column, center, center);
-  margin-top: 20rem;
   color: white;
   font-family: "Proxima Nova", sans-serif;
 
   &__item {
     @include flex(column, center, center);
-    margin-bottom: 15rem;
   }
 
   &__text {
@@ -523,15 +544,6 @@ button {
   background-color: #ff401e;
   @include flex(column, center, center);
 
-  &__text {
-    width: 100%;
-    @include flex(row, center, center);
-    text-align: center;
-    color: white;
-    font-size: 28px;
-    font-family: "Proxima Nova", sans-serif
-  }
-
   &__brand-wrapper {
     width: 100%;
     @include flex(row, center, center);
@@ -604,15 +616,6 @@ button {
 
   &__brand {
     width: 200px;
-  }
-
-  &__text {
-    width: 100%;
-    @include flex(row, center, center);
-    text-align: center;
-    color: white;
-    font-size: 28px;
-    font-family: "Proxima Nova", sans-serif
   }
 }
 
@@ -748,5 +751,274 @@ button {
   100% {
     opacity: 100%;
     transform: translateY(0px);
+  }
+}
+
+/*
+* ==========================================
+* STYLES FOR MOBILE DEVICES
+* ==========================================
+*/
+
+.mobile {
+  &__brand-wrapper {
+    position: relative;
+    width: 100%;
+    @include flex(row, center, center);
+  }
+
+  &__brand {
+    width: 300px;
+  }
+}
+
+/* ---------- ABOUT SECTION START ---------- */
+
+.m-about {
+  background-color: #ff401e;
+  padding-top: 3rem;
+
+  &__taglines {
+    margin-top: 5rem;
+  }
+
+  & .taglines__item {
+    margin-bottom: 2.5rem;
+  }
+
+  &__photo {
+    width: 100%;
+  }
+
+  &__photo img {
+    width: 100%;
+  }
+}
+
+/* ---------- ABOUT SECTION END ---------- */
+
+/* ---------- PROJECTS SECTION START ---------- */
+
+.m-project-content {
+  @include flex(column, center, center);
+  position: relative;
+  width: 100%;
+
+  &__logo {
+    margin-top: 6rem;
+    width: 400px;
+  }
+
+  &__logo object {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__separator {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 70%;
+    height: 1px;
+    background-color: white;
+  }
+
+  &__text {
+    color: white;
+    font-family: "Proxima Nova", sans-serif;
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  &__buttons {
+    @include flex(column, space-around, center);
+    width: initial;
+    height: 180px;
+  }
+
+  &__buttons .buttons__item {
+    width: 350px;
+    height: 60px;
+    border: 3px solid white;
+    font-size: 1.7rem;
+  }
+}
+
+.m-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.m-background img {
+  opacity: 0.3;
+  width: 100%;
+  height: 100%;
+}
+
+.m-music {
+  &__m-background {
+    background-color: rgb(142, 170, 213);
+  }
+}
+
+.m-lavka {
+  &__m-background {
+    background-color: rgb(255, 64, 30);
+  }
+}
+
+.m-shu {
+  &__m-background {
+    background-color: rgb(255, 187, 30);
+  }
+}
+
+.m-gold {
+  &__m-background {
+    background-color: rgb(255, 64, 30);
+  }
+
+  & .m-project-content__logo {
+    width: 200px;
+  }
+}
+.m-teriberka {
+  &__m-background {
+    background-color: #1eacff;
+  }
+}
+
+/* ---------- PROJECTS SECTION END ---------- */
+
+/* ---------- CLIENTS SECTION START ---------- */
+
+.m-clients {
+  background-color: rgb(255, 64, 30);
+  @include flex(column, center, center);
+
+  &__text {
+    margin-top: 4rem;
+  }
+
+  & .clients {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(11, 180px);
+    width: 90%;
+    margin-bottom: 3rem;
+
+    &__item object {
+      width: 45%;
+    }
+
+    &__item:first-child object {
+      width: 50%;
+    }
+
+    &__item:nth-child(3) object { // lion
+      width: 60%;
+    }
+
+    &__item:nth-child(11) object { // kraft flowers
+      width: 60%;
+    }
+
+    &__item:last-child {
+      display: none;
+    }
+  }
+}
+
+/* ---------- CLIENTS SECTION END ---------- */
+
+/* ---------- REVIEWS SECTION START ---------- */
+
+.m-reviews {
+  background-color: black;
+  @include flex(column, center, center);
+
+  &__text {
+    margin-top: 6rem;
+    margin-bottom: 3rem;
+  }
+
+  & .reviews {
+    width: 70%;
+
+    &__client {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .client {
+      & img {
+        margin-right: 0;
+        margin-bottom: 2rem;
+      }
+
+      &__data {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+/* ---------- REVIEWS SECTION END ---------- */
+
+/* ---------- CONTACTS SECTION START ---------- */
+
+.m-contacts {
+  background-color: black;
+
+  &__brand-wrapper {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  & .contacts-section__content {
+    position: relative;
+    top: 0;
+  }
+
+  & .socials {
+    width: 100%;
+
+    &__item {
+      height: 100px;
+      width: 100px;
+      font-size: 60px;
+    }
+  }
+
+}
+
+/* ---------- CONTACTS SECTION END ---------- */
+
+/*
+* ==========================================
+* MEDIA QUERIES
+* ==========================================
+*/
+
+@media (max-width: 575.98px) {
+  .first-part, .slider-section {
+    display: none;
+  }
+
+  .mobile {
+    display: block;
+  }
+
+}
+
+@media (min-width: 576px) {
+  .first-part, .slider-section {
+    display: block;
+  }
+
+  .mobile {
+    display: none;
   }
 }

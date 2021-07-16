@@ -677,7 +677,11 @@ $(document).ready(function () {
 
   /*---------- DISTRIBUTOR RUNNING ----------*/
 
-  distributor.run();
+  if ($(window).width() > 575.98) distributor.run();
 
   /*---------- END OF DISTRIBUTOR RUNNING ----------*/
+});
+
+$(window).on("beforeunload", function () {
+  $(window).scrollTop(0);
 });
