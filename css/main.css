@@ -94,16 +94,34 @@ select {
   font-style: normal;
 }
 @font-face {
-  font-family: "Letter Gothic Std Medium";
-  font-style: normal;
+  font-family: "Proxima Nova";
+  src: url("../data/fonts/Proxima Nova/proxima-nova-italic-webfont.otf") format("otf");
   font-weight: normal;
-  src: local("Letter Gothic Std Medium"), url("../data/fonts/Letter Gothic Std/LetterGothicStd.woff") format("woff");
+  font-style: italic;
+}
+@font-face {
+  font-family: "Proxima Nova Light";
+  src: url("../data/fonts/Proxima Nova Light/proxima_nova-light-webfont.woff2") format("woff2"), url("../data/fonts/Proxima Nova Light/proxima_nova-light-webfont.woff") format("woff"), url("../data/fonts/Proxima Nova Light/proxima_nova-light-webfont.ttf") format("truetype"), url("../data/fonts/Proxima Nova Light/proxima_nova-light-webfont.svg#proxima_novasemibold") format("svg");
+  font-weight: 300;
+  font-style: normal;
 }
 @font-face {
   font-family: "Letter Gothic Std Bold";
+  src: url("../data/fonts/Letter Gothic Std Bold/Letter-Gothic-Std-Bold.ttf") format("ttf"), url("../data/fonts/Letter Gothic Std Bold/Letter-Gothic-Std-Bold.woff") format("woff");
+  font-weight: bold;
   font-style: normal;
+}
+@font-face {
+  font-family: "Letter Gothic Std Bold";
+  src: url("../data/fonts/Letter Gothic Std Bold/Letter-Gothic-Bold-Italic.ttf") format("ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Letter Gothic Std Medium";
+  src: url("../data/fonts/Letter Gothic Std Medium/Letter-Gothic-Std-Medium.woff") format("woff");
   font-weight: normal;
-  src: local("Letter Gothic Std Bold"), url("../data/fonts/Letter Gothic Std/LetterGothicStd-Bold.woff") format("woff");
+  font-style: normal;
 }
 /*
 * ==========================================
@@ -146,6 +164,18 @@ html::-webkit-scrollbar {
   font-family: "Proxima Nova", sans-serif;
 }
 
+.brand-name {
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-family: "Letter Gothic Std Bold", sans-serif;
+}
+
+.locked {
+  overflow: hidden;
+}
+
 /*
 * ==========================================
 * FIRST PART STYLES
@@ -178,14 +208,14 @@ html::-webkit-scrollbar {
 }
 .menu__area-left {
   justify-content: flex-start;
-  padding-left: 10rem;
+  padding-left: 5rem;
 }
 .menu__area-left .menu__item {
   transform: rotate(-90deg);
 }
 .menu__area-right {
   justify-content: flex-end;
-  padding-right: 10rem;
+  padding-right: 5rem;
 }
 .menu__area-right .menu__item {
   transform: rotate(90deg);
@@ -197,7 +227,8 @@ html::-webkit-scrollbar {
   justify-content: space-evenly;
   align-items: initial;
 }
-.menu__item a {
+.menu__item {
+  cursor: pointer;
   color: white;
   font-size: 20px;
 }
@@ -252,7 +283,7 @@ html::-webkit-scrollbar {
 /* wrapper for brand-logo */
 .main-section__brand-wrapper {
   position: fixed;
-  top: -100px;
+  top: -65px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -262,7 +293,7 @@ html::-webkit-scrollbar {
   align-items: center;
 }
 .main-section__brand {
-  width: 400px;
+  width: 550px;
 }
 
 /* text under the brand logo */
@@ -277,14 +308,7 @@ html::-webkit-scrollbar {
   margin: auto;
   left: 0;
   right: 0;
-  bottom: 8rem;
-}
-.main-section__brand-name {
-  color: white;
-  font-weight: 600;
-  font-size: 18px;
-  text-transform: uppercase;
-  font-family: "Letter Gothic Std Bold", sans-serif;
+  bottom: 6rem;
 }
 
 .en-version-link {
@@ -333,6 +357,7 @@ html::-webkit-scrollbar {
   align-items: center;
 }
 .team-header__item {
+  letter-spacing: 1px;
   font-family: "Proxima Nova", sans-serif;
   margin-left: 4rem;
   margin-right: 4rem;
@@ -346,6 +371,9 @@ html::-webkit-scrollbar {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.team-header__name {
+  font-size: 18px;
 }
 
 /* vertical stripes */
@@ -387,12 +415,14 @@ html::-webkit-scrollbar {
   align-items: center;
 }
 .taglines__text_bold {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   line-height: 2.2rem;
   margin-bottom: 2rem;
 }
 .taglines__text_light {
-  font-size: 1.2rem;
+  font-size: 1rem;
+  font-family: "Proxima Nova Light", sans-serif;
+  letter-spacing: 1px;
 }
 
 .team-image {
@@ -435,7 +465,7 @@ html::-webkit-scrollbar {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 110vh;
   overflow: hidden;
 }
 .slide.current {
@@ -469,17 +499,21 @@ html::-webkit-scrollbar {
   animation: fade-up 2s forwards;
 }
 .slide__brand-wrapper {
-  margin-top: 2rem;
+  margin-top: 3rem;
   margin-bottom: 2rem;
   z-index: 1;
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+.slide__brand-wrapper .brand-name {
+  font-size: 15px;
+}
 .slide__brand {
-  width: 200px;
+  width: 190px;
+  height: 110px;
 }
 .slide__logo {
   width: 400px;
@@ -520,6 +554,16 @@ html::-webkit-scrollbar {
   font-size: 1rem;
   text-align: center;
   transition: all 0.08s ease-in-out;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.buttons__item img {
+  margin-right: 10px;
+}
+.buttons a {
+  text-decoration: none;
 }
 .buttons__item:first-child {
   width: 270px;
@@ -527,11 +571,11 @@ html::-webkit-scrollbar {
 .buttons__item:last-child {
   width: 200px;
 }
-.buttons__item:first-child:hover {
+.buttons__item.red:hover {
   background-color: #ff401e;
   border: 2px solid #ff401e;
 }
-.buttons__item:last-child:hover {
+.buttons__item.blue:hover {
   background-color: #0448cc;
   border: 2px solid #0448cc;
 }
@@ -554,6 +598,12 @@ html::-webkit-scrollbar {
 /* gold-standart section */
 .slide[data-index="3"] .slide__content {
   background-color: #e62a2a;
+}
+.slide[data-index="3"] .slide__logo {
+  width: 500px;
+}
+.slide[data-index="3"] .slide__brand-wrapper {
+  margin-top: 0;
 }
 
 /* teriberka section */
@@ -581,7 +631,7 @@ html::-webkit-scrollbar {
 .clients-section__brand-wrapper {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -593,8 +643,12 @@ html::-webkit-scrollbar {
   position: absolute;
   top: initial;
 }
+.clients-section__brand-wrapper .brand-name {
+  font-size: 15px;
+}
 .clients-section__brand {
-  width: 200px;
+  width: 170px;
+  height: 100px;
 }
 
 .clients {
@@ -636,7 +690,7 @@ html::-webkit-scrollbar {
 .reviews-section__brand-wrapper {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -648,8 +702,12 @@ html::-webkit-scrollbar {
   position: absolute;
   top: initial;
 }
+.reviews-section__brand-wrapper .brand-name {
+  font-size: 15px;
+}
 .reviews-section__brand {
-  width: 200px;
+  width: 170px;
+  height: 100px;
 }
 
 .reviews {
@@ -661,12 +719,13 @@ html::-webkit-scrollbar {
   align-items: center;
 }
 .reviews__item {
-  margin-bottom: 5rem;
+  margin-bottom: 6rem;
 }
 .reviews__text {
   color: white;
-  font-size: 28px;
+  font-size: 31px;
   font-family: "Proxima Nova", sans-serif;
+  font-style: italic;
   text-align: left;
   margin-bottom: 1.5rem;
 }
@@ -718,15 +777,20 @@ html::-webkit-scrollbar {
   align-items: center;
 }
 .contacts-section__brand-wrapper {
+  margin-top: 2rem;
   z-index: 10;
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+.contacts-section__brand-wrapper .brand-name {
+  font-size: 15px;
+}
 .contacts-section__brand {
-  width: 200px;
+  width: 170px;
+  height: 100px;
 }
 .contacts-section__text {
   margin-bottom: 1rem;
@@ -796,11 +860,112 @@ html::-webkit-scrollbar {
 * STYLES FOR MOBILE DEVICES
 * ==========================================
 */
+.hamburger {
+  z-index: 9999;
+  position: fixed;
+  right: 30px;
+  top: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.hamburger__item {
+  height: 3px;
+  width: 25px;
+  background-color: #ff401e;
+  border-radius: 20px;
+}
+.hamburger__item:after, .hamburger__item:before {
+  content: "";
+  position: absolute;
+  height: 3px;
+  width: 25px;
+  background-color: #ff401e;
+  border-radius: 20px;
+}
+.hamburger__item:after {
+  transform: translateY(12px);
+}
+.hamburger__item:before {
+  transform: translateY(-12px);
+}
+
+.m-menu-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(23, 23, 26, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.2s all ease-in-out;
+}
+.m-menu-wrapper.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.m-menu {
+  position: relative;
+  padding: 20px 0;
+  width: 280px;
+  height: 200px;
+  background-color: #ff5a3d;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.m-menu__item {
+  color: white;
+  font-size: 18px;
+  font-family: "Proxima Nova", sans-serif;
+  font-weight: 600;
+  border-bottom: 1px solid white;
+  transition: all 0.1s ease-in-out;
+}
+
+.exit-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background-color: #3d3d3d;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.exit-button__item {
+  position: absolute;
+  width: 15px;
+  height: 2px;
+  background-color: white;
+}
+.exit-button__item:first-child {
+  transform: rotate(45deg);
+}
+.exit-button__item:last-child {
+  transform: rotate(-45deg);
+}
+
 .mobile__brand-wrapper {
   position: relative;
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

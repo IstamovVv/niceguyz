@@ -299,7 +299,7 @@ $(document).ready(function () {
    */
 
   function normalizeMainBrandLogo() {
-    brand.width(normalize(0, 300, 400, 200, doc.scrollTop()));
+    brand.width(normalize(0, 300, 550, 200, doc.scrollTop()));
   }
 
   /* ==========================================
@@ -675,13 +675,98 @@ $(document).ready(function () {
 
   /*---------- END OF FUNCTIONS BINDING ----------*/
 
-  /*---------- DISTRIBUTOR RUNNING ----------*/
+  /* ==========================================
+   * Desktop version functions
+   * ==========================================
+   */
 
-  if ($(window).width() > 575.98) distributor.run();
+  // this code calculates a breakpoints for the site sections
+  let scrollValues = {};
+  scrollValues["about"] = 0;
+  scrollValues["projects"] = firstPart.height();
 
-  /*---------- END OF DISTRIBUTOR RUNNING ----------*/
+  scrollValues["reviews"] = scrollValues["projects"];
+  for (let i = 0; i < 6; ++i)
+    scrollValues["reviews"] += $(`.slide[data-index=${i}]`).height();
+
+  scrollValues["contacts"] =
+    scrollValues["reviews"] + $(`.slide[data-index=${6}]`).height();
+
+  // this function is responsible for menu scrolling
+  function scrollTo(sectionName) {
+    let value = scrollValues[sectionName];
+    let delta = Math.abs(value - $(window).scrollTop());
+    let time = normalize(0, 10000, 0, 4000, delta);
+
+    // disable any actions when animating
+    $("body").addClass("locked");
+    $(".menu__item").unbind("click", clickMenuHandler);
+
+    $("html, body").animate(
+      {
+        scrollTop: value,
+      },
+      time,
+      "swing",
+      () => {
+        // enable actions after animating
+        console.log("ANIMATION COMPLETED");
+        $("body").removeClass("locked");
+        $(".menu__item").bind("click", clickMenuHandler);
+      }
+    );
+  }
+
+  function clickMenuHandler(event) {
+    event.stopImmediatePropagation();
+    event.preventDefault();
+    let target = $(event.currentTarget).data("scroll");
+    scrollTo(target);
+  }
+
+  // this function binds menu items to appropriate breakpoints
+  function bindMenu() {
+    let items = $(".menu__item");
+    items.click(clickMenuHandler);
+  }
+
+  function runDesktop() {
+    distributor.run();
+    bindMenu();
+  }
+
+  /* ==========================================
+   * Mobile version functions
+   * ==========================================
+   */
+
+  function toggleMobileMenu() {
+    let wrapper = $(".m-menu-wrapper");
+    wrapper.toggleClass("active");
+    $("body").toggleClass("locked");
+  }
+
+  function activeMobileMenu() {
+    $(".hamburger").click(toggleMobileMenu);
+    $(".exit-button").click(toggleMobileMenu);
+  }
+
+  function runMobile() {
+    activeMobileMenu();
+  }
+
+  /*---------- FUNCTIONS RUNNING ----------*/
+
+  if ($(window).width() > 575.98) {
+    runDesktop();
+  } else {
+    runMobile();
+  }
+
+  /*---------- END OF FUNCTIONS RUNNING ----------*/
 });
 
+// this code makes the site always open the first section when updating
 $(window).on("beforeunload", function () {
   $(window).scrollTop(0);
 });

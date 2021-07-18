@@ -16,18 +16,44 @@
   font-style: normal;
 }
 
+
 @font-face {
-  font-family: 'Letter Gothic Std Medium';
-  font-style: normal;
+  font-family: 'Proxima Nova';
+  src: url('../data/fonts/Proxima Nova/proxima-nova-italic-webfont.otf') format('otf');
   font-weight: normal;
-  src: local('Letter Gothic Std Medium'), url('../data/fonts/Letter Gothic Std/LetterGothicStd.woff') format('woff');
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Proxima Nova Light';
+  src: url('../data/fonts/Proxima Nova Light/proxima_nova-light-webfont.woff2') format('woff2'),
+  url('../data/fonts/Proxima Nova Light/proxima_nova-light-webfont.woff') format('woff'),
+  url('../data/fonts/Proxima Nova Light/proxima_nova-light-webfont.ttf') format('truetype'),
+  url('../data/fonts/Proxima Nova Light/proxima_nova-light-webfont.svg#proxima_novasemibold') format('svg');
+  font-weight: 300;
+  font-style: normal;
 }
 
 @font-face {
   font-family: 'Letter Gothic Std Bold';
+  src: url('../data/fonts/Letter Gothic Std Bold/Letter-Gothic-Std-Bold.ttf') format('ttf'),
+  url('../data/fonts/Letter Gothic Std Bold/Letter-Gothic-Std-Bold.woff') format('woff');
+  font-weight: bold;
   font-style: normal;
+}
+
+@font-face {
+  font-family: 'Letter Gothic Std Bold';
+  src: url('../data/fonts/Letter Gothic Std Bold/Letter-Gothic-Bold-Italic.ttf') format('ttf');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Letter Gothic Std Medium';
+  src: url('../data/fonts/Letter Gothic Std Medium/Letter-Gothic-Std-Medium.woff') format('woff');
   font-weight: normal;
-  src: local('Letter Gothic Std Bold'), url('../data/fonts/Letter Gothic Std/LetterGothicStd-Bold.woff') format('woff');
+  font-style: normal;
 }
 
 /*
@@ -79,6 +105,18 @@ html::-webkit-scrollbar {
   font-family: "Proxima Nova", sans-serif
 }
 
+.brand-name {
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-family: 'Letter Gothic Std Bold', sans-serif;
+}
+
+.locked {
+  overflow: hidden;
+}
+
 /*
 * ==========================================
 * FIRST PART STYLES
@@ -111,7 +149,7 @@ html::-webkit-scrollbar {
 
     &-left {
       justify-content: flex-start;
-      padding-left: 10rem;
+      padding-left: 5rem;
 
       & .menu__item {
         transform: rotate(-90deg);
@@ -120,7 +158,7 @@ html::-webkit-scrollbar {
 
     &-right {
       justify-content: flex-end;
-      padding-right: 10rem;
+      padding-right: 5rem;
 
       & .menu__item {
         transform: rotate(90deg);
@@ -133,7 +171,8 @@ html::-webkit-scrollbar {
     @include flex(column, space-evenly);
   }
 
-  &__item a {
+  &__item {
+    cursor: pointer;
     color: white;
     font-size: 20px;
   }
@@ -201,7 +240,7 @@ html::-webkit-scrollbar {
 .main-section {
   &__brand-wrapper {
     position: fixed;
-    top: -100px;
+    top: -65px;
     left: 0;
     width: 100%;
     height: 100%;
@@ -210,7 +249,7 @@ html::-webkit-scrollbar {
   }
 
   &__brand {
-    width: 400px;
+    width: 550px;
   }
 }
 /* text under the brand logo */
@@ -224,16 +263,9 @@ html::-webkit-scrollbar {
     margin: auto;
     left: 0;
     right: 0;
-    bottom: 8rem;
+    bottom: 6rem;
   }
 
-  &__brand-name {
-    color: white;
-    font-weight: 600;
-    font-size: 18px;
-    text-transform: uppercase;
-    font-family: 'Letter Gothic Std Bold', sans-serif;
-  }
 }
 
 .en-version-link {
@@ -281,6 +313,7 @@ html::-webkit-scrollbar {
   @include flex(row, center, center);
 
   &__item {
+    letter-spacing: 1px;
     font-family: "Proxima Nova", sans-serif;
     margin-left: 4rem;
     margin-right: 4rem;
@@ -293,6 +326,10 @@ html::-webkit-scrollbar {
   &__name, &__post {
     color: white;
     @include flex(column, center, center);
+  }
+
+  &__name {
+    font-size: 18px;
   }
 }
 
@@ -331,13 +368,15 @@ html::-webkit-scrollbar {
     @include flex(column, center, center);
 
     &_bold {
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       line-height: 2.2rem;
       margin-bottom: 2rem;
     }
 
     &_light {
-      font-size: 1.2rem;
+      font-size: 1rem;
+      font-family: "Proxima Nova Light", sans-serif;
+      letter-spacing: 1px;
     }
   }
 }
@@ -381,7 +420,7 @@ html::-webkit-scrollbar {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 110vh;
   overflow: hidden;
 
   &.current {
@@ -414,15 +453,20 @@ html::-webkit-scrollbar {
   }
 
   &__brand-wrapper {
-    margin-top: 2rem;
+    margin-top: 3rem;
     margin-bottom: 2rem;
     z-index: 1;
     width: 100%;
-    @include flex(row, center, center);
+    @include flex(column, center, center);
+
+    & .brand-name {
+      font-size: 15px;
+    }
   }
 
   &__brand {
-    width: 200px;
+    width: 190px;
+    height: 110px;
   }
 
   &__logo {
@@ -465,6 +509,15 @@ html::-webkit-scrollbar {
     font-size: 1rem;
     text-align: center;
     transition: all 0.08s ease-in-out;
+    @include flex(row, center, center);
+
+    & img {
+      margin-right: 10px;
+    }
+  }
+
+  & a {
+    text-decoration: none;
   }
 
   &__item:first-child {
@@ -475,12 +528,12 @@ html::-webkit-scrollbar {
     width: 200px;
   }
 
-  &__item:first-child:hover {
+  &__item.red:hover {
     background-color: rgba(255, 64, 30);
     border: 2px solid rgba(255, 64, 30);
   }
 
-  &__item:last-child:hover {
+  &__item.blue:hover {
     background-color: rgba(4, 72, 204);
     border: 2px solid rgba(4, 72, 204);
   }
@@ -516,6 +569,14 @@ html::-webkit-scrollbar {
   .slide__content {
     background-color: #e62a2a;
   }
+
+  .slide__logo {
+    width: 500px;
+  }
+
+  .slide__brand-wrapper {
+    margin-top: 0;
+  }
 }
 
 /* teriberka section */
@@ -546,7 +607,7 @@ html::-webkit-scrollbar {
 
   &__brand-wrapper {
     width: 100%;
-    @include flex(row, center, center);
+    @include flex(column, center, center);
 
     &.fixed {
       position: fixed;
@@ -557,10 +618,15 @@ html::-webkit-scrollbar {
       position: absolute;
       top: initial;
     }
+
+    & .brand-name {
+      font-size: 15px;
+    }
   }
 
   &__brand {
-    width: 200px;
+    width: 170px;
+    height: 100px;
   }
 }
 
@@ -600,7 +666,7 @@ html::-webkit-scrollbar {
 
   &__brand-wrapper {
     width: 100%;
-    @include flex(row, center, center);
+    @include flex(column, center, center);
 
     &.fixed {
       position: fixed;
@@ -612,10 +678,14 @@ html::-webkit-scrollbar {
       top: initial;
     }
 
+    & .brand-name {
+      font-size: 15px;
+    }
   }
 
   &__brand {
-    width: 200px;
+    width: 170px;
+    height: 100px;
   }
 }
 
@@ -625,13 +695,14 @@ html::-webkit-scrollbar {
   @include flex(column, center, center);
 
   &__item {
-    margin-bottom: 5rem;
+    margin-bottom: 6rem;
   }
 
   &__text {
     color: white;
-    font-size: 28px;
+    font-size: 31px;
     font-family: "Proxima Nova", sans-serif;
+    font-style: italic;
     text-align: left;
     margin-bottom: 1.5rem;
   }
@@ -679,13 +750,19 @@ html::-webkit-scrollbar {
   }
 
   &__brand-wrapper {
+    margin-top: 2rem;
     z-index: 10;
     width: 100%;
-    @include flex(row, center, center);
+    @include flex(column, center, center);
+
+    & .brand-name {
+      font-size: 15px;
+    }
   }
 
   &__brand {
-    width: 200px;
+    width: 170px;
+    height: 100px;
   }
 
   &__text {
@@ -760,11 +837,121 @@ html::-webkit-scrollbar {
 * ==========================================
 */
 
+$hamburger-size: 60px;
+$hamburger-indent: 30px;
+$hamburger-item-width: 25px;
+$hamburger-item-height: 3px;
+$hamburger-item-space: 12px;
+
+$exit-button-size: 30px;
+$exit-button-item-width: 15px;
+$exit-button-item-height: 2px;
+
+.hamburger {
+  z-index: 9999;
+  position: fixed;
+  right: $hamburger-indent;
+  top: $hamburger-indent;
+
+  width: $hamburger-size;
+  height: $hamburger-size;
+  background-color: white;
+  border-radius: 50%;
+
+  @include flex(column, center, center);
+
+  &__item {
+    height: $hamburger-item-height;
+    width: $hamburger-item-width;
+    background-color: #ff401e;
+    border-radius: 20px;
+
+    &:after, &:before {
+      content: '';
+      position: absolute;
+      height: $hamburger-item-height;
+      width: $hamburger-item-width;
+      background-color: #ff401e;
+      border-radius: 20px;
+    }
+
+    &:after {
+      transform: translateY($hamburger-item-space);
+    }
+
+    &:before {
+      transform: translateY(-$hamburger-item-space);
+    }
+  }
+}
+
+.m-menu-wrapper {
+  @include flex(column, center, center);
+  z-index: 9999;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(23,23,26,.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.2s all ease-in-out;
+
+  &.active {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.m-menu {
+  position: relative;
+  padding: 20px 0;
+  width: 280px;
+  height: 200px;
+  background-color: rgb(255, 90, 61);
+  border-radius: 10px;
+  @include flex(column, space-evenly, center);
+
+  &__item {
+    color: white;
+    font-size: 18px;
+    font-family: "Proxima Nova", sans-serif;
+    font-weight: 600;
+    border-bottom: 1px solid white;
+    transition: all 0.1s ease-in-out;
+  }
+}
+
+.exit-button {
+  @include flex(column, center, center);
+  position: absolute;
+  top: -$exit-button-size / 2;
+  right: -$exit-button-size / 2;
+  background-color: #3d3d3d;
+  width: $exit-button-size;
+  height: $exit-button-size;
+  border-radius: 50%;
+
+  &__item {
+    position: absolute;
+    width: $exit-button-item-width;
+    height: $exit-button-item-height;
+    background-color: white;
+
+    &:first-child {
+      transform: rotate(45deg);
+    }
+
+    &:last-child {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
 .mobile {
   &__brand-wrapper {
     position: relative;
     width: 100%;
-    @include flex(row, center, center);
+    @include flex(column, center, center);
   }
 
   &__brand {
