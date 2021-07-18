@@ -419,7 +419,7 @@ $(document).ready(function () {
 
     if (!slideInfo.hasClass("animate")) slideInfo.addClass("animate");
 
-    $(".slider").css(
+    slider.css(
       "opacity",
       `${normalize($(window).height(), 0, 0, 100, sliderCoords.top)}%`
     );
@@ -468,14 +468,27 @@ $(document).ready(function () {
     return value;
   }
 
+  function optimizeVideo(currentIndex) {
+    for (let i = 0; i < sliderLength; ++i) {
+      if (Math.abs(currentIndex - i) >= 2)
+        $(`.slide[data-index=${i}] video`).trigger("pause");
+      else $(`.slide[data-index=${i}] video`).trigger("play");
+    }
+  }
+
+  // this is slider's variables
+  let maxHeight = $(".slide[data-index=0]").height();
+  let minHeight = 0;
+
+  for (let i = 1; i < sliderLength; ++i) {
+    $(`.slide[data-index=${i}] video`).trigger("pause");
+  }
+
   function sliderController() {
     if (slider.hasClass("active")) {
       // scroll inside the slider
       let sliderScroll = $(window).scrollTop() - sliderCoords.top;
       let current = $(".slide.current");
-
-      let maxHeight = getMaxHeight(current);
-      let minHeight = getMinHeight(current);
 
       // the next slide
       let nextElement =
@@ -487,16 +500,30 @@ $(document).ready(function () {
       if (sliderScroll >= maxHeight) {
         current.css("top", `${-current.height()}px`);
 
-        if (nextElement) nextElement.addClass("current");
+        if (nextElement) {
+          nextElement.addClass("current");
+
+          maxHeight = getMaxHeight(nextElement);
+          minHeight = getMinHeight(nextElement);
+
+          optimizeVideo(nextElement.data("index"));
+        }
         nextElement.css("opacity", "100%");
 
-        if (maxHeight < sliderWrapper.height()) current.removeClass("current");
+        if (maxHeight < sliderWrapper.height()) {
+          current.removeClass("current");
+        }
       } else if (sliderScroll <= minHeight) {
         current.css("top", "0px");
 
         if (prevElement.html()) {
           prevElement.addClass("current");
           current.removeClass("current");
+
+          maxHeight = getMaxHeight(prevElement);
+          minHeight = getMinHeight(prevElement);
+
+          optimizeVideo(prevElement.data("index"));
         }
       } else {
         current.css("top", `${-sliderScroll + getMinHeight(current)}px`);
@@ -710,7 +737,6 @@ $(document).ready(function () {
       "swing",
       () => {
         // enable actions after animating
-        console.log("ANIMATION COMPLETED");
         $("body").removeClass("locked");
         $(".menu__item").bind("click", clickMenuHandler);
       }
