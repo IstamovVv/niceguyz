@@ -153,6 +153,8 @@ html::-webkit-scrollbar {
 }
 
 .text-wrapper_bold-white {
+  margin-top: 14rem;
+  margin-bottom: 5rem;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -490,7 +492,7 @@ html::-webkit-scrollbar {
   position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 60%;
   height: 100%;
@@ -499,8 +501,6 @@ html::-webkit-scrollbar {
   animation: fade-up 2s forwards;
 }
 .slide__brand-wrapper {
-  margin-top: 3rem;
-  margin-bottom: 2rem;
   z-index: 1;
   width: 100%;
   display: flex;
@@ -513,7 +513,6 @@ html::-webkit-scrollbar {
 }
 .slide__brand {
   width: 190px;
-  height: 110px;
 }
 .slide__logo {
   width: 400px;
@@ -565,10 +564,10 @@ html::-webkit-scrollbar {
 .buttons a {
   text-decoration: none;
 }
-.buttons__item:first-child {
+.buttons a:first-child .buttons__item {
   width: 270px;
 }
-.buttons__item:last-child {
+.buttons a:last-child .buttons__item {
   width: 200px;
 }
 .buttons__item.red:hover {
@@ -616,7 +615,7 @@ html::-webkit-scrollbar {
 
 /* clients section */
 .slide[data-index="5"] {
-  height: 200vh;
+  height: 220vh;
 }
 
 .clients-section {
@@ -648,7 +647,10 @@ html::-webkit-scrollbar {
 }
 .clients-section__brand {
   width: 170px;
-  height: 100px;
+}
+.clients-section .text-wrapper_bold-white {
+  margin-top: 7rem;
+  margin-bottom: 1rem;
 }
 
 .clients {
@@ -684,7 +686,7 @@ html::-webkit-scrollbar {
   background-color: black;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 .reviews-section__brand-wrapper {
@@ -707,7 +709,6 @@ html::-webkit-scrollbar {
 }
 .reviews-section__brand {
   width: 170px;
-  height: 100px;
 }
 
 .reviews {
@@ -715,7 +716,7 @@ html::-webkit-scrollbar {
   height: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 .reviews__item {
@@ -926,7 +927,8 @@ html::-webkit-scrollbar {
   justify-content: space-evenly;
   align-items: center;
 }
-.m-menu__item {
+.m-menu__item a {
+  text-decoration: none;
   color: white;
   font-size: 18px;
   font-family: "Proxima Nova", sans-serif;
@@ -1165,7 +1167,7 @@ html::-webkit-scrollbar {
 * MEDIA QUERIES
 * ==========================================
 */
-@media (max-width: 575.98px) {
+@media screen and (max-width: 575.98px) {
   .first-part, .slider-section {
     display: none;
   }
@@ -1174,13 +1176,184 @@ html::-webkit-scrollbar {
     display: block;
   }
 }
-@media (min-width: 576px) {
+@media screen and (max-width: 425px) {
+  .m-projects .m-project-content__logo {
+    width: 310px;
+  }
+  .m-projects .m-project-content__buttons .buttons__item {
+    font-size: 1.3rem;
+    width: 275px;
+    height: 50px;
+  }
+  .m-projects .m-project-content__text {
+    font-size: 1rem;
+  }
+  .m-projects .taglines__text_bold {
+    font-size: 1.5rem;
+  }
+
+  .m-contacts .contacts-section__content {
+    width: 65%;
+  }
+  .m-contacts .contacts-section__text {
+    font-size: 18px;
+  }
+  .m-contacts .contacts-section__email {
+    font-size: 35px;
+  }
+  .m-contacts .contacts-section__number {
+    font-size: 18px;
+  }
+  .m-contacts .socials__item {
+    font-size: 45px;
+  }
+
+  .m-reviews .reviews__text {
+    font-size: 24px;
+  }
+  .m-reviews .reviews .client__data {
+    font-size: 15px;
+  }
+}
+@media screen and (min-width: 576px) {
   .first-part, .slider-section {
     display: block;
   }
 
   .mobile {
     display: none;
+  }
+}
+@media screen and (min-width: 1399.98px) {
+  .reviews {
+    width: 60%;
+  }
+  .reviews__item {
+    margin-bottom: 8rem;
+  }
+  .reviews__text {
+    font-size: 35px;
+  }
+  .reviews__client img {
+    width: 200px;
+  }
+
+  .client__data {
+    font-size: 20px;
+  }
+}
+@media screen and (min-width: 1899.98px) {
+  .slide__brand-wrapper {
+    margin-top: 3rem;
+    margin-bottom: 6rem;
+  }
+
+  .slide[data-index="3"] .slide__brand-wrapper {
+    margin-top: 7rem;
+  }
+  .slide[data-index="3"] .slide__logo {
+    width: 700px;
+  }
+
+  .slide__brand {
+    width: 280px;
+  }
+
+  .slide__logo {
+    width: 650px;
+  }
+
+  .slide__text {
+    font-size: 1.8rem;
+  }
+
+  .buttons__item {
+    height: 75px;
+    font-size: 1.6rem;
+  }
+
+  .buttons a:first-child .buttons__item {
+    width: 370px;
+  }
+
+  .buttons a:last-child .buttons__item {
+    width: 300px;
+  }
+
+  .taglines__text_bold {
+    font-size: 2.2rem;
+    line-height: 3.5rem;
+  }
+
+  .taglines__text_light {
+    font-size: 1.5rem;
+  }
+
+  .team-header__brand-wrapper {
+    width: 270px;
+  }
+
+  .team-header__name {
+    font-size: 26px;
+  }
+
+  .menu__item {
+    font-size: 30px;
+  }
+
+  .slide[data-index="6"] {
+    height: 500vh;
+  }
+
+  .text-wrapper_bold-white {
+    margin-top: 20rem;
+    font-size: 55px;
+  }
+
+  .reviews__item {
+    margin-bottom: 12rem;
+  }
+  .reviews__text {
+    font-size: 60px;
+  }
+  .reviews__client img {
+    width: 280px;
+  }
+
+  .clients-section__brand {
+    width: 300px;
+  }
+
+  .reviews-section__brand {
+    width: 300px;
+  }
+
+  .clients-section__brand-wrapper .brand-name {
+    font-size: 27px;
+  }
+
+  .reviews-section__brand-wrapper .brand-name {
+    font-size: 27px;
+  }
+
+  .client__data {
+    font-size: 30px;
+  }
+
+  .contacts-section__text {
+    font-size: 50px;
+  }
+  .contacts-section__email {
+    font-size: 80px;
+  }
+  .contacts-section__number {
+    font-size: 50px;
+  }
+
+  .socials__item {
+    height: 100px;
+    width: 100px;
+    font-size: 75px;
   }
 }
 

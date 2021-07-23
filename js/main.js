@@ -519,6 +519,10 @@ $(document).ready(function () {
         if (prevElement.html()) {
           prevElement.addClass("current");
           current.removeClass("current");
+          $(`.slide[data-index=${current.data("index") + 1}]`).css(
+            "opacity",
+            0
+          );
 
           maxHeight = getMaxHeight(prevElement);
           minHeight = getMinHeight(prevElement);

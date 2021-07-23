@@ -97,6 +97,8 @@ html::-webkit-scrollbar {
 }
 
 .text-wrapper_bold-white {
+  margin-top: 14rem;
+  margin-bottom: 5rem;
   width: 100%;
   @include flex(row, center, center);
   text-align: center;
@@ -443,7 +445,7 @@ html::-webkit-scrollbar {
   &__info {
     z-index: 2000;
     position: absolute;
-    @include flex(column, center, center);
+    @include flex(column, flex-start, center);
     width: 60%;
     height: 100%;
 
@@ -453,8 +455,6 @@ html::-webkit-scrollbar {
   }
 
   &__brand-wrapper {
-    margin-top: 3rem;
-    margin-bottom: 2rem;
     z-index: 1;
     width: 100%;
     @include flex(column, center, center);
@@ -466,7 +466,6 @@ html::-webkit-scrollbar {
 
   &__brand {
     width: 190px;
-    height: 110px;
   }
 
   &__logo {
@@ -520,11 +519,11 @@ html::-webkit-scrollbar {
     text-decoration: none;
   }
 
-  &__item:first-child {
+  & a:first-child &__item {
     width: 270px;
   }
 
-  &__item:last-child {
+  & a:last-child &__item {
     width: 200px;
   }
 
@@ -596,7 +595,7 @@ html::-webkit-scrollbar {
 /* clients section */
 
 .slide[data-index="5"] {
-  height: 200vh;
+  height: 220vh;
 }
 
 .clients-section {
@@ -626,7 +625,11 @@ html::-webkit-scrollbar {
 
   &__brand {
     width: 170px;
-    height: 100px;
+  }
+
+  & .text-wrapper_bold-white {
+    margin-top: 7rem;
+    margin-bottom: 1rem;
   }
 }
 
@@ -662,7 +665,7 @@ html::-webkit-scrollbar {
   border-bottom: 6px solid #ff401e;
   height: 100%;
   background-color: black;
-  @include flex(column, center, center);
+  @include flex(column, flex-start, center);
 
   &__brand-wrapper {
     width: 100%;
@@ -685,14 +688,13 @@ html::-webkit-scrollbar {
 
   &__brand {
     width: 170px;
-    height: 100px;
   }
 }
 
 .reviews {
   width: 50%;
   height: 80%;
-  @include flex(column, center, center);
+  @include flex(column, flex-start, center);
 
   &__item {
     margin-bottom: 6rem;
@@ -911,7 +913,8 @@ $exit-button-item-height: 2px;
   border-radius: 10px;
   @include flex(column, space-evenly, center);
 
-  &__item {
+  &__item a {
+    text-decoration: none;
     color: white;
     font-size: 18px;
     font-family: "Proxima Nova", sans-serif;
@@ -1116,6 +1119,8 @@ $exit-button-item-height: 2px;
       display: none;
     }
   }
+
+
 }
 
 /* ---------- CLIENTS SECTION END ---------- */
@@ -1178,10 +1183,11 @@ $exit-button-item-height: 2px;
       font-size: 60px;
     }
   }
-
 }
 
+
 /* ---------- CONTACTS SECTION END ---------- */
+
 
 /*
 * ==========================================
@@ -1189,23 +1195,228 @@ $exit-button-item-height: 2px;
 * ==========================================
 */
 
-@media (max-width: 575.98px) {
+@media screen and (max-width: 575.98px) {
   .first-part, .slider-section {
     display: none;
   }
 
   .mobile {
     display: block;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .m-projects {
+    & .m-project-content__logo {
+      width: 310px;
+    }
+
+    & .m-project-content__buttons .buttons__item {
+      font-size: 1.3rem;
+      width: 275px;
+      height: 50px;
+    }
+
+    & .m-project-content__text {
+      font-size: 1rem;
+    }
+
+    & .taglines__text_bold {
+      font-size: 1.5rem;
+    }
+  }
+
+  .m-contacts {
+    & .contacts-section__content {
+      width: 65%;
+    }
+
+    & .contacts-section__text {
+      font-size: 18px;
+    }
+
+    & .contacts-section__email {
+      font-size: 35px;
+    }
+
+    & .contacts-section__number {
+      font-size: 18px;
+    }
+
+    & .socials__item {
+      font-size: 45px;
+    }
+  }
+
+  .m-reviews {
+    & .reviews__text {
+      font-size: 24px;
+    }
+
+    & .reviews .client__data {
+      font-size: 15px;
+    }
   }
 
 }
 
-@media (min-width: 576px) {
+@media screen and (min-width: 576px) {
   .first-part, .slider-section {
     display: block;
   }
 
   .mobile {
     display: none;
+  }
+}
+
+@media screen and (min-width: 1399.98px) {
+  .reviews {
+    width: 60%;
+
+    &__item {
+      margin-bottom: 8rem;
+    }
+
+    &__text {
+      font-size: 35px;
+    }
+
+    &__client img {
+      width: 200px;
+    }
+  }
+
+  .client__data {
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 1899.98px) {
+  .slide__brand-wrapper {
+    margin-top: 3rem;
+    margin-bottom: 6rem;
+  }
+
+  .slide[data-index="3"]  {
+    & .slide {
+      &__brand-wrapper {
+        margin-top: 7rem;
+      }
+
+      &__logo {
+        width: 700px;
+      }
+    }
+  }
+
+  .slide__brand {
+    width: 280px;
+  }
+
+  .slide__logo {
+    width: 650px;
+  }
+
+  .slide__text {
+    font-size: 1.8rem;
+  }
+
+  .buttons__item {
+    height: 75px;
+    font-size: 1.6rem;
+  }
+
+  .buttons a:first-child .buttons__item {
+    width: 370px;
+  }
+
+  .buttons a:last-child .buttons__item {
+    width: 300px;
+  }
+
+  .taglines__text_bold {
+    font-size: 2.2rem;
+    line-height: 3.5rem;
+  }
+
+  .taglines__text_light {
+    font-size: 1.5rem;
+  }
+
+  .team-header__brand-wrapper {
+    width: 270px;
+  }
+
+  .team-header__name {
+    font-size: 26px;
+  }
+
+  .menu__item {
+    font-size: 30px;
+  }
+
+  .slide[data-index="6"] {
+    height: 500vh;
+  }
+
+  .text-wrapper_bold-white {
+    margin-top: 20rem;
+    font-size: 55px;
+  }
+
+  .reviews {
+    &__item {
+      margin-bottom: 12rem;
+    }
+
+    &__text {
+      font-size: 60px;
+    }
+
+    &__client img {
+      width: 280px;
+    }
+  }
+
+  .clients-section__brand {
+    width: 300px;
+  }
+
+  .reviews-section__brand {
+    width: 300px;
+  }
+
+  .clients-section__brand-wrapper .brand-name {
+    font-size: 27px;
+  }
+
+  .reviews-section__brand-wrapper .brand-name {
+    font-size: 27px;
+  }
+
+  .client__data {
+    font-size: 30px;
+  }
+
+  .contacts-section {
+    &__text {
+      font-size: 50px;
+    }
+
+    &__email {
+      font-size: 80px;
+    }
+
+    &__number {
+      font-size: 50px;
+    }
+
+  }
+
+  .socials__item {
+    height: 100px;
+    width: 100px;
+    font-size: 75px;
   }
 }
