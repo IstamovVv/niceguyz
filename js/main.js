@@ -27,12 +27,16 @@ function normalize(firstLeft, firstRight, secondLeft, secondRight, firstValue) {
   return secondLeft + (secondRight - secondLeft) * ratio;
 }
 
+function getObjectCoords(object) {
+  return object[0].getBoundingClientRect();
+}
+
 class ScrollDistributor {
   constructor() {
     this._data = new Map();
     this._checker = function (object) {
       // if checker returns true, we should activate objects
-      let coords = $(object)[0].getBoundingClientRect();
+      let coords = getObjectCoords(object);
       let top =
         coords.top >= 0 ? coords.top : Math.abs(coords.top) - coords.height;
 
@@ -160,7 +164,7 @@ $(document).ready(function () {
 
   /* slider section variables */
   let slider = $(".slider");
-  let sliderCoords = slider[0].getBoundingClientRect();
+  let sliderCoords = getObjectCoords(slider);
   let sliderWrapper = $(".slider-wrapper");
   let sliderLength = Array.from($(".slider .slide")).length;
 
@@ -174,6 +178,9 @@ $(document).ready(function () {
   let reviewsSectionMenu = $(".reviews-section__menu");
   let reviewsSectionBrandWrapper = $(".reviews-section__brand-wrapper");
 
+  /* contacts section variables */
+  let contactsSection = $(".contacts-section");
+
   /*---------- PREDICATES ----------*/
 
   function alwaysTrue() {
@@ -181,12 +188,12 @@ $(document).ready(function () {
   }
 
   function isEndOfObject(object) {
-    let coords = object[0].getBoundingClientRect();
+    let coords = getObjectCoords(object);
     return Math.abs(coords.top) >= coords.height - $(window).height();
   }
 
   function isAboveObject(object) {
-    let coords = object[0].getBoundingClientRect();
+    let coords = getObjectCoords(object)
     return coords.top > 0;
   }
 
@@ -223,7 +230,7 @@ $(document).ready(function () {
   }
 
   function test1() {
-    let coords = aboutSection[0].getBoundingClientRect();
+    let coords = getObjectCoords(aboutSection)
     return -coords.top >= coords.height;
   }
 
@@ -257,10 +264,10 @@ $(document).ready(function () {
    */
 
   function centerStripes() {
-    let firstCoords = firstFounder[0].getBoundingClientRect();
+    let firstCoords = getObjectCoords(firstFounder)
     leftStripe.css("left", `${firstCoords.left + firstFounder.width() / 2}px`);
 
-    let secondCoords = secondFounder[0].getBoundingClientRect();
+    let secondCoords = getObjectCoords(secondFounder)
     rightStripe.css(
       "left",
       `${secondCoords.left + secondFounder.width() / 2}px`
@@ -345,7 +352,7 @@ $(document).ready(function () {
    */
 
   function flowAboutSectionColor() {
-    let coords = aboutSection[0].getBoundingClientRect();
+    let coords = getObjectCoords(aboutSection)
 
     // GC - Green Channel
     // BC - Blue Channel
@@ -371,7 +378,7 @@ $(document).ready(function () {
    */
 
   function showAboutStripes() {
-    let coords = aboutSection[0].getBoundingClientRect();
+    let coords = getObjectCoords(aboutSection)
     let newOpacity = normalize(0, -150, 0, 100, coords.top);
 
     stripes.css("opacity", `${newOpacity}%`);
@@ -414,7 +421,7 @@ $(document).ready(function () {
    */
 
   function showSlider() {
-    let sliderCoords = slider[0].getBoundingClientRect();
+    let sliderCoords = getObjectCoords(slider)
     let slideInfo = $(".slide.current .slide__info");
 
     if (!slideInfo.hasClass("animate")) slideInfo.addClass("animate");
@@ -502,6 +509,7 @@ $(document).ready(function () {
 
         if (nextElement) {
           nextElement.addClass("current");
+          current.removeClass("current");
 
           maxHeight = getMaxHeight(nextElement);
           minHeight = getMinHeight(nextElement);
@@ -510,19 +518,19 @@ $(document).ready(function () {
         }
         nextElement.css("opacity", "100%");
 
-        if (maxHeight < sliderWrapper.height()) {
-          current.removeClass("current");
-        }
       } else if (sliderScroll <= minHeight) {
         current.css("top", "0px");
 
         if (prevElement.html()) {
           prevElement.addClass("current");
           current.removeClass("current");
+
           $(`.slide[data-index=${current.data("index") + 1}]`).css(
             "opacity",
             0
           );
+
+          console.log('test')
 
           maxHeight = getMaxHeight(prevElement);
           minHeight = getMinHeight(prevElement);
@@ -581,7 +589,7 @@ $(document).ready(function () {
   }
 
   function stickBrandLogo(section, logo, offset) {
-    let coords = section[0].getBoundingClientRect();
+    let coords = getObjectCoords(section)
 
     logo.removeClass("fixed");
     logo.addClass("absolute");
@@ -723,35 +731,39 @@ $(document).ready(function () {
   scrollValues["contacts"] =
     scrollValues["reviews"] + $(`.slide[data-index=${6}]`).height();
 
-  // this function is responsible for menu scrolling
-  function scrollTo(sectionName) {
-    let value = scrollValues[sectionName];
-    let delta = Math.abs(value - $(window).scrollTop());
-    let time = normalize(0, 10000, 0, 4000, delta);
-
+  function scrollTo(scrollValue, element, eventName, handler) {
     // disable any actions when animating
     $("body").addClass("locked");
-    $(".menu__item").unbind("click", clickMenuHandler);
+    element.unbind(eventName, handler);
+
+    let delta = Math.abs(scrollValue - $(window).scrollTop());
+    let time = normalize(0, 10000, 0, 4000, delta);
 
     $("html, body").animate(
-      {
-        scrollTop: value,
-      },
-      time,
-      "swing",
-      () => {
-        // enable actions after animating
-        $("body").removeClass("locked");
-        $(".menu__item").bind("click", clickMenuHandler);
-      }
+        {
+          scrollTop: scrollValue,
+        },
+        time,
+        "swing",
+        () => {
+          // enable actions after animating
+          $("body").removeClass("locked");
+          element.bind(eventName, handler);
+        }
     );
+  }
+
+  // this function is responsible for menu scrolling
+  function scrollToSection(sectionName) {
+    let value = scrollValues[sectionName];
+    scrollTo(value, $(".menu__item"), 'click', clickMenuHandler);
   }
 
   function clickMenuHandler(event) {
     event.stopImmediatePropagation();
     event.preventDefault();
     let target = $(event.currentTarget).data("scroll");
-    scrollTo(target);
+    scrollToSection(target);
   }
 
   // this function binds menu items to appropriate breakpoints
@@ -759,6 +771,81 @@ $(document).ready(function () {
     let items = $(".menu__item");
     items.click(clickMenuHandler);
   }
+
+  /*---------- KEYBOARD NAVIGATION ----------*/
+
+  function getTopOfObject(object) {
+    let coords = getObjectCoords(object)
+    return coords.top;
+  }
+
+  function getMidOfObject(object) {
+    let coords = getObjectCoords(object)
+    let top = coords.top;
+    let end = coords.top + coords.height;
+
+    return (end - top) / 2;
+  }
+
+  // this point actually isn't the end. But when we are there, we reached the bottom border of the object
+  function getEndOfObject(object) {
+    let coords = getObjectCoords(object);
+    return coords.top + (coords.height - $(window).height());
+  }
+
+  // these key points indicate where to navigate when the arrow is pressed
+  function getKeyPoints() {
+    let keyPoints = [];
+
+    keyPoints.push(getTopOfObject(firstPart)); // 0
+
+    keyPoints.push(getTopOfObject(aboutSection)); // 1
+    keyPoints.push(getEndOfObject(aboutSection)); // 2
+
+    keyPoints.push(getTopOfObject(slider)); // 3 Map the music
+    keyPoints.push(keyPoints[3] + $('.slide[data-index=1]').height()); // 4 lavka lavka
+    keyPoints.push(keyPoints[4] + $('.slide[data-index=2]').height()); // 5 SHU
+    keyPoints.push(keyPoints[5] + $('.slide[data-index=3]').height()); // 6 Gold Standart
+    keyPoints.push(keyPoints[6] + $('.slide[data-index=4]').height()); // 7 Teriberka
+
+    let clientsCoords = getObjectCoords(clientsSection);
+    keyPoints.push(keyPoints[7] + $('.slide[data-index=4]').height()); // 8 Clients Section
+    keyPoints.push(keyPoints[8] + (clientsCoords.height - $(window).height())); // 9 Clients Section End
+
+    let reviewsCoords = getObjectCoords(reviewsSection);
+    keyPoints.push(keyPoints[9] + $(window).height()); // 10 Reviews Section
+    keyPoints.push(keyPoints[10] + $(window).height()); // 11 Reviews Section
+    keyPoints.push(keyPoints[11] + $(window).height()); // 12 Reviews Section
+    keyPoints.push(keyPoints[12] + (reviewsCoords.height - $(window).height())); // 13 Reviews Section
+
+    keyPoints.push(keyPoints[13] + $(window).height()); // 14 Contacts Section
+
+    return keyPoints;
+  }
+
+  let keyPoints = getKeyPoints();
+  let currentIndex = 0;
+
+  function arrowKeyDownHandler(event) {
+    event.stopImmediatePropagation();
+
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (currentIndex <= 0) return;
+
+      scrollTo(keyPoints[--currentIndex], $(document), 'keydown', arrowKeyDownHandler)
+    }
+
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      if (currentIndex >= keyPoints.length) return;
+
+      scrollTo(keyPoints[++currentIndex], $(document), 'keydown', arrowKeyDownHandler);
+    }
+  }
+  document.addEventListener('keydown', arrowKeyDownHandler);
+
+  /*---------- END OF KEYBOARD NAVIGATION ----------*/
 
   function runDesktop() {
     distributor.run();
