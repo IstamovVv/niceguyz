@@ -254,6 +254,7 @@ html::-webkit-scrollbar {
     width: 550px;
   }
 }
+
 /* text under the brand logo */
 
 .main-section {
@@ -742,6 +743,11 @@ html::-webkit-scrollbar {
 .contacts-section {
   @include flex(column, center, center);
 
+  & a {
+    text-decoration: none;
+    color: #ff401e;
+  }
+
   &__content {
     z-index: 1000;
     position: absolute;
@@ -777,7 +783,6 @@ html::-webkit-scrollbar {
 
   &__email {
     margin-bottom: 1rem;
-    color: #ff401e;
     font-size: 50px;
     font-family: "Proxima Nova", sans-serif;
     text-align: center;
@@ -792,7 +797,6 @@ html::-webkit-scrollbar {
 
   &__number {
     margin-bottom: 1rem;
-    color: #ff401e;
     font-size: 25px;
     font-family: "Proxima Nova", sans-serif;
     text-align: center;
@@ -808,12 +812,15 @@ html::-webkit-scrollbar {
     @include flex(row, center, center);
     height: 50px;
     width: 50px;
-    color: white;
     font-size: 35px;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
 
-    &:hover {
+    & a {
+      transition: all 0.2s ease-in-out;
+      color: white;
+    }
+
+    & a:hover {
       color: #ff401e;
     }
   }
@@ -893,7 +900,7 @@ $exit-button-item-height: 2px;
   position: fixed;
   height: 100%;
   width: 100%;
-  background-color: rgba(23,23,26,.9);
+  background-color: rgba(23, 23, 26, .9);
   opacity: 0;
   visibility: hidden;
   transition: 0.2s all ease-in-out;
@@ -1030,6 +1037,11 @@ $exit-button-item-height: 2px;
     height: 60px;
     border: 3px solid white;
     font-size: 1.7rem;
+
+    & a {
+      color: white;
+      text-decoration: none;
+    }
   }
 }
 
@@ -1075,6 +1087,7 @@ $exit-button-item-height: 2px;
     width: 200px;
   }
 }
+
 .m-teriberka {
   &__m-background {
     background-color: #1eacff;
@@ -1169,9 +1182,37 @@ $exit-button-item-height: 2px;
     margin-bottom: 1rem;
   }
 
-  & .contacts-section__content {
-    position: relative;
-    top: 0;
+  & .contacts-section {
+    &__content {
+      position: relative;
+      top: 0;
+      width: 70%;
+    }
+
+    &__text {
+      font-size: 22px;
+    }
+
+    &__email {
+      font-size: 38px;
+    }
+
+    &__number {
+      color: white;
+      font-size: 20px;
+    }
+
+    &__socials {
+      color: white;
+    }
+
+    &__socials .socials__item:hover {
+      color: #ff401e;
+    }
+
+    &__socials .socials__item:active {
+      color: #ff401e;
+    }
   }
 
   & .socials {
@@ -1180,9 +1221,10 @@ $exit-button-item-height: 2px;
     &__item {
       height: 100px;
       width: 100px;
-      font-size: 60px;
+      font-size: 40px;
     }
   }
+
 }
 
 
@@ -1207,6 +1249,7 @@ $exit-button-item-height: 2px;
 
 @media screen and (max-width: 425px) {
   .m-projects {
+
     & .m-project-content__logo {
       width: 310px;
     }
@@ -1298,7 +1341,7 @@ $exit-button-item-height: 2px;
     margin-bottom: 6rem;
   }
 
-  .slide[data-index="3"]  {
+  .slide[data-index="3"] {
     & .slide {
       &__brand-wrapper {
         margin-top: 7rem;
@@ -1357,42 +1400,52 @@ $exit-button-item-height: 2px;
   }
 
   .slide[data-index="6"] {
-    height: 500vh;
+    height: 400vh;
   }
 
   .text-wrapper_bold-white {
     margin-top: 20rem;
-    font-size: 55px;
+    font-size: 40px;
   }
 
   .reviews {
+    z-index: 1000;
+
     &__item {
       margin-bottom: 12rem;
     }
 
     &__text {
-      font-size: 60px;
+      font-size: 40px;
     }
 
     &__client img {
       width: 280px;
     }
+
+    & a {
+      color: white;
+    }
   }
 
-  .clients-section__brand {
-    width: 300px;
+  .reviews-section {
+    &__brand {
+      width: 300px;
+    }
+
+    &__brand-wrapper .brand-name {
+      font-size: 27px;
+    }
   }
 
-  .reviews-section__brand {
-    width: 300px;
-  }
+  .clients-section {
+    &__brand {
+      width: 300px;
+    }
 
-  .clients-section__brand-wrapper .brand-name {
-    font-size: 27px;
-  }
-
-  .reviews-section__brand-wrapper .brand-name {
-    font-size: 27px;
+    &__brand-wrapper .brand-name {
+      font-size: 27px;
+    }
   }
 
   .client__data {

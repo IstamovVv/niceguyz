@@ -193,7 +193,7 @@ $(document).ready(function () {
   }
 
   function isAboveObject(object) {
-    let coords = getObjectCoords(object)
+    let coords = getObjectCoords(object);
     return coords.top > 0;
   }
 
@@ -230,7 +230,7 @@ $(document).ready(function () {
   }
 
   function test1() {
-    let coords = getObjectCoords(aboutSection)
+    let coords = getObjectCoords(aboutSection);
     return -coords.top >= coords.height;
   }
 
@@ -253,6 +253,7 @@ $(document).ready(function () {
   function isNotEndOfReviewsSection() {
     return !isEndOfReviewsSection();
   }
+
   /*---------- END OF PREDICATES ----------*/
 
   /*---------- INITIALIZING FUNCTIONS ----------*/
@@ -264,15 +265,16 @@ $(document).ready(function () {
    */
 
   function centerStripes() {
-    let firstCoords = getObjectCoords(firstFounder)
+    let firstCoords = getObjectCoords(firstFounder);
     leftStripe.css("left", `${firstCoords.left + firstFounder.width() / 2}px`);
 
-    let secondCoords = getObjectCoords(secondFounder)
+    let secondCoords = getObjectCoords(secondFounder);
     rightStripe.css(
       "left",
       `${secondCoords.left + secondFounder.width() / 2}px`
     );
   }
+
   /* ==========================================
    * Slider section code
    * ==========================================
@@ -352,7 +354,7 @@ $(document).ready(function () {
    */
 
   function flowAboutSectionColor() {
-    let coords = getObjectCoords(aboutSection)
+    let coords = getObjectCoords(aboutSection);
 
     // GC - Green Channel
     // BC - Blue Channel
@@ -378,7 +380,7 @@ $(document).ready(function () {
    */
 
   function showAboutStripes() {
-    let coords = getObjectCoords(aboutSection)
+    let coords = getObjectCoords(aboutSection);
     let newOpacity = normalize(0, -150, 0, 100, coords.top);
 
     stripes.css("opacity", `${newOpacity}%`);
@@ -421,7 +423,7 @@ $(document).ready(function () {
    */
 
   function showSlider() {
-    let sliderCoords = getObjectCoords(slider)
+    let sliderCoords = getObjectCoords(slider);
     let slideInfo = $(".slide.current .slide__info");
 
     if (!slideInfo.hasClass("animate")) slideInfo.addClass("animate");
@@ -517,7 +519,6 @@ $(document).ready(function () {
           optimizeVideo(nextElement.data("index"));
         }
         nextElement.css("opacity", "100%");
-
       } else if (sliderScroll <= minHeight) {
         current.css("top", "0px");
 
@@ -529,8 +530,6 @@ $(document).ready(function () {
             "opacity",
             0
           );
-
-          console.log('test')
 
           maxHeight = getMaxHeight(prevElement);
           minHeight = getMinHeight(prevElement);
@@ -589,7 +588,7 @@ $(document).ready(function () {
   }
 
   function stickBrandLogo(section, logo, offset) {
-    let coords = getObjectCoords(section)
+    let coords = getObjectCoords(section);
 
     logo.removeClass("fixed");
     logo.addClass("absolute");
@@ -740,23 +739,23 @@ $(document).ready(function () {
     let time = normalize(0, 10000, 0, 4000, delta);
 
     $("html, body").animate(
-        {
-          scrollTop: scrollValue,
-        },
-        time,
-        "swing",
-        () => {
-          // enable actions after animating
-          $("body").removeClass("locked");
-          element.bind(eventName, handler);
-        }
+      {
+        scrollTop: scrollValue,
+      },
+      time,
+      "swing",
+      () => {
+        // enable actions after animating
+        $("body").removeClass("locked");
+        element.bind(eventName, handler);
+      }
     );
   }
 
   // this function is responsible for menu scrolling
   function scrollToSection(sectionName) {
     let value = scrollValues[sectionName];
-    scrollTo(value, $(".menu__item"), 'click', clickMenuHandler);
+    scrollTo(value, $(".menu__item"), "click", clickMenuHandler);
   }
 
   function clickMenuHandler(event) {
@@ -775,12 +774,12 @@ $(document).ready(function () {
   /*---------- KEYBOARD NAVIGATION ----------*/
 
   function getTopOfObject(object) {
-    let coords = getObjectCoords(object)
+    let coords = getObjectCoords(object);
     return coords.top;
   }
 
   function getMidOfObject(object) {
-    let coords = getObjectCoords(object)
+    let coords = getObjectCoords(object);
     let top = coords.top;
     let end = coords.top + coords.height;
 
@@ -803,13 +802,13 @@ $(document).ready(function () {
     keyPoints.push(getEndOfObject(aboutSection)); // 2
 
     keyPoints.push(getTopOfObject(slider)); // 3 Map the music
-    keyPoints.push(keyPoints[3] + $('.slide[data-index=1]').height()); // 4 lavka lavka
-    keyPoints.push(keyPoints[4] + $('.slide[data-index=2]').height()); // 5 SHU
-    keyPoints.push(keyPoints[5] + $('.slide[data-index=3]').height()); // 6 Gold Standart
-    keyPoints.push(keyPoints[6] + $('.slide[data-index=4]').height()); // 7 Teriberka
+    keyPoints.push(keyPoints[3] + $(".slide[data-index=1]").height()); // 4 lavka lavka
+    keyPoints.push(keyPoints[4] + $(".slide[data-index=2]").height()); // 5 SHU
+    keyPoints.push(keyPoints[5] + $(".slide[data-index=3]").height()); // 6 Gold Standart
+    keyPoints.push(keyPoints[6] + $(".slide[data-index=4]").height()); // 7 Teriberka
 
     let clientsCoords = getObjectCoords(clientsSection);
-    keyPoints.push(keyPoints[7] + $('.slide[data-index=4]').height()); // 8 Clients Section
+    keyPoints.push(keyPoints[7] + $(".slide[data-index=4]").height()); // 8 Clients Section
     keyPoints.push(keyPoints[8] + (clientsCoords.height - $(window).height())); // 9 Clients Section End
 
     let reviewsCoords = getObjectCoords(reviewsSection);
@@ -829,21 +828,32 @@ $(document).ready(function () {
   function arrowKeyDownHandler(event) {
     event.stopImmediatePropagation();
 
-    if (event.key === 'ArrowUp') {
+    if (event.key === "ArrowUp") {
       event.preventDefault();
       if (currentIndex <= 0) return;
 
-      scrollTo(keyPoints[--currentIndex], $(document), 'keydown', arrowKeyDownHandler)
+      scrollTo(
+        keyPoints[--currentIndex],
+        $(document),
+        "keydown",
+        arrowKeyDownHandler
+      );
     }
 
-    if (event.key === 'ArrowDown') {
+    if (event.key === "ArrowDown") {
       event.preventDefault();
       if (currentIndex >= keyPoints.length) return;
 
-      scrollTo(keyPoints[++currentIndex], $(document), 'keydown', arrowKeyDownHandler);
+      scrollTo(
+        keyPoints[++currentIndex],
+        $(document),
+        "keydown",
+        arrowKeyDownHandler
+      );
     }
   }
-  document.addEventListener('keydown', arrowKeyDownHandler);
+
+  document.addEventListener("keydown", arrowKeyDownHandler);
 
   /*---------- END OF KEYBOARD NAVIGATION ----------*/
 

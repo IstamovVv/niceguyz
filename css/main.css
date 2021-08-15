@@ -766,6 +766,10 @@ html::-webkit-scrollbar {
   justify-content: center;
   align-items: center;
 }
+.contacts-section a {
+  text-decoration: none;
+  color: #ff401e;
+}
 .contacts-section__content {
   z-index: 1000;
   position: absolute;
@@ -802,7 +806,6 @@ html::-webkit-scrollbar {
 }
 .contacts-section__email {
   margin-bottom: 1rem;
-  color: #ff401e;
   font-size: 50px;
   font-family: "Proxima Nova", sans-serif;
   text-align: center;
@@ -815,7 +818,6 @@ html::-webkit-scrollbar {
 }
 .contacts-section__number {
   margin-bottom: 1rem;
-  color: #ff401e;
   font-size: 25px;
   font-family: "Proxima Nova", sans-serif;
   text-align: center;
@@ -836,12 +838,14 @@ html::-webkit-scrollbar {
   align-items: center;
   height: 50px;
   width: 50px;
-  color: white;
   font-size: 35px;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
 }
-.socials__item:hover {
+.socials__item a {
+  transition: all 0.2s ease-in-out;
+  color: white;
+}
+.socials__item a:hover {
   color: #ff401e;
 }
 
@@ -1038,6 +1042,10 @@ html::-webkit-scrollbar {
   border: 3px solid white;
   font-size: 1.7rem;
 }
+.m-project-content__buttons .buttons__item a {
+  color: white;
+  text-decoration: none;
+}
 
 .m-background {
   position: absolute;
@@ -1151,6 +1159,26 @@ html::-webkit-scrollbar {
 .m-contacts .contacts-section__content {
   position: relative;
   top: 0;
+  width: 70%;
+}
+.m-contacts .contacts-section__text {
+  font-size: 22px;
+}
+.m-contacts .contacts-section__email {
+  font-size: 38px;
+}
+.m-contacts .contacts-section__number {
+  color: white;
+  font-size: 20px;
+}
+.m-contacts .contacts-section__socials {
+  color: white;
+}
+.m-contacts .contacts-section__socials .socials__item:hover {
+  color: #ff401e;
+}
+.m-contacts .contacts-section__socials .socials__item:active {
+  color: #ff401e;
 }
 .m-contacts .socials {
   width: 100%;
@@ -1158,7 +1186,7 @@ html::-webkit-scrollbar {
 .m-contacts .socials__item {
   height: 100px;
   width: 100px;
-  font-size: 60px;
+  font-size: 40px;
 }
 
 /* ---------- CONTACTS SECTION END ---------- */
@@ -1302,37 +1330,41 @@ html::-webkit-scrollbar {
   }
 
   .slide[data-index="6"] {
-    height: 500vh;
+    height: 400vh;
   }
 
   .text-wrapper_bold-white {
     margin-top: 20rem;
-    font-size: 55px;
+    font-size: 40px;
   }
 
+  .reviews {
+    z-index: 1000;
+  }
   .reviews__item {
     margin-bottom: 12rem;
   }
   .reviews__text {
-    font-size: 60px;
+    font-size: 40px;
   }
   .reviews__client img {
     width: 280px;
   }
-
-  .clients-section__brand {
-    width: 300px;
+  .reviews a {
+    color: white;
   }
 
   .reviews-section__brand {
     width: 300px;
   }
-
-  .clients-section__brand-wrapper .brand-name {
+  .reviews-section__brand-wrapper .brand-name {
     font-size: 27px;
   }
 
-  .reviews-section__brand-wrapper .brand-name {
+  .clients-section__brand {
+    width: 300px;
+  }
+  .clients-section__brand-wrapper .brand-name {
     font-size: 27px;
   }
 
